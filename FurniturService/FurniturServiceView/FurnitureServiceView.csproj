@@ -152,13 +152,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FurnitureServiceListImplement\FurnitureServiceListImplement.csproj">
+      <Project>{6b1595fe-97c5-4db9-8e3e-edf9817b3b5e}</Project>
+      <Name>FurnitureServiceListImplement</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FurniturServiceBusinessLogic\FurnitureServiceBusinessLogic.csproj">
       <Project>{f52af8f7-d81c-4e6e-bb07-054f5202d41e}</Project>
       <Name>FurnitureServiceBusinessLogic</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\АгктшегкуЫукмшсуListImplement\FurnitureServiceListImplement.csproj">
-      <Project>{9f7787e6-a940-4f74-8d8d-6691d68828e7}</Project>
-      <Name>FurnitureServiceListImplement</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
