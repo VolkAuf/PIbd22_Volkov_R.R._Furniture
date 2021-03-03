@@ -152,9 +152,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FurnitureServiceListImplement\FurnitureServiceListImplement.csproj">
-      <Project>{6b1595fe-97c5-4db9-8e3e-edf9817b3b5e}</Project>
-      <Name>FurnitureServiceListImplement</Name>
+    <ProjectReference Include="..\FurnitureServiceFileImplement\FurnitureServiceFileImplement.csproj">
+      <Project>{17b67559-406d-4ffc-ba82-88afb580e68c}</Project>
+      <Name>FurnitureServiceFileImplement</Name>
     </ProjectReference>
     <ProjectReference Include="..\FurniturServiceBusinessLogic\FurnitureServiceBusinessLogic.csproj">
       <Project>{f52af8f7-d81c-4e6e-bb07-054f5202d41e}</Project>
