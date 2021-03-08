@@ -101,7 +101,7 @@
             this.Controls.Add(this.textBoxCount);
             this.Controls.Add(this.comboBoxComponent);
             this.Name = "FormFurnitureComponent";
-            this.Text = "Компонент изделия";
+            this.Text = "Компонент мебели";
             this.ResumeLayout(false);
             this.PerformLayout();
 

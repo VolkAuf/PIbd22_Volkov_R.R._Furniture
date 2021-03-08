@@ -201,7 +201,7 @@
             this.Controls.Add(this.labelPrice);
             this.Controls.Add(this.labelName);
             this.Name = "FormFurniture";
-            this.Text = "Изделие";
+            this.Text = "Мебель";
             this.Load += new System.EventHandler(this.FormFurniture_Load);
             this.groupBoxComponents.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();

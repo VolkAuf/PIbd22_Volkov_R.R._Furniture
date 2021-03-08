@@ -122,7 +122,7 @@
             this.Controls.Add(this.textBoxCount);
             this.Controls.Add(this.comboBoxComponent);
             this.Name = "FormWarehouseReplenishment";
-            this.Text = "FormWarehouseReplenishment";
+            this.Text = "Компоненты на складе";
             this.ResumeLayout(false);
             this.PerformLayout();
 

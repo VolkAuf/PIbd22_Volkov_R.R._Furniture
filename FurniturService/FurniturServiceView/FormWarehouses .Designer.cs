@@ -97,7 +97,7 @@
             this.Controls.Add(this.buttonAdd);
             this.Controls.Add(this.dataGridView);
             this.Name = "FormWarehouses";
-            this.Text = "Warehouses";
+            this.Text = "Склады";
             this.Load += new System.EventHandler(this.FormWharehouses_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.ResumeLayout(false);
