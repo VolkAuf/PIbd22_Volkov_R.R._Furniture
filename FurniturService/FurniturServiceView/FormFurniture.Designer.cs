@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.labelName = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.labelPrice = new System.Windows.Forms.Label();
             this.textBoxName = new System.Windows.Forms.TextBox();
             this.textBoxPrice = new System.Windows.Forms.TextBox();
             this.groupBoxComponents = new System.Windows.Forms.GroupBox();
@@ -56,14 +56,14 @@
             this.labelName.TabIndex = 0;
             this.labelName.Text = "Название:";
             // 
-            // label2
+            // labelPrice
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 44);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(47, 17);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Цена:";
+            this.labelPrice.AutoSize = true;
+            this.labelPrice.Location = new System.Drawing.Point(12, 44);
+            this.labelPrice.Name = "labelPrice";
+            this.labelPrice.Size = new System.Drawing.Size(47, 17);
+            this.labelPrice.TabIndex = 1;
+            this.labelPrice.Text = "Цена:";
             // 
             // textBoxName
             // 
@@ -198,7 +198,7 @@
             this.Controls.Add(this.groupBoxComponents);
             this.Controls.Add(this.textBoxPrice);
             this.Controls.Add(this.textBoxName);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.labelPrice);
             this.Controls.Add(this.labelName);
             this.Name = "FormFurniture";
             this.Text = "Изделие";
@@ -213,7 +213,7 @@
         #endregion
 
         private System.Windows.Forms.Label labelName;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label labelPrice;
         private System.Windows.Forms.TextBox textBoxName;
         private System.Windows.Forms.TextBox textBoxPrice;
         private System.Windows.Forms.GroupBox groupBoxComponents;

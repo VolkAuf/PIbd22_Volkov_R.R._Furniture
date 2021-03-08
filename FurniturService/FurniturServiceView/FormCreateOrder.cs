@@ -1,9 +1,7 @@
 ﻿using FurnitureServiceBusinessLogic.BindingModels;
 using FurnitureServiceBusinessLogic.BusinessLogics;
 using FurnitureServiceBusinessLogic.ViewModels;
-using FurnitureServiceListImplement.Implements;
 using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using Unity;
 
