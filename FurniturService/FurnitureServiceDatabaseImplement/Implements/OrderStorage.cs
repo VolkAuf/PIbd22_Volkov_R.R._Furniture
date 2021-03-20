@@ -2,6 +2,7 @@
 using FurnitureServiceBusinessLogic.Interfaces;
 using FurnitureServiceBusinessLogic.ViewModels;
 using FurnitureServiceDatabaseImplement.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace FurnitureServiceDatabaseImplement.Implements
             using (FurnitureServiceDatabase context = new FurnitureServiceDatabase())
             {
                 return context.Orders
+                .Include(rec => rec.Furnitures)
                 .Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
