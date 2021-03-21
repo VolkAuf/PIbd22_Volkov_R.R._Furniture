@@ -2,9 +2,9 @@
 using FurnitureServiceFileImplement.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Xml.Linq;
 
 namespace FurnitureServiceFileImplement
@@ -15,14 +15,17 @@ namespace FurnitureServiceFileImplement
         private readonly string ComponentFileName = "Component.xml";
         private readonly string OrderFileName = "Order.xml";
         private readonly string FurnitureFileName = "Furniture.xml";
+        private readonly string WarehouseFileName = "Warehouse.xml";
         public List<Component> Components { get; set; }
         public List<Order> Orders { get; set; }
         public List<Furniture> Furnitures { get; set; }
+        public List<Warehouse> Warehouses { get; set; }
         private FileDataListSingleton()
         {
             Components = LoadComponents();
             Orders = LoadOrders();
             Furnitures = LoadFurnitures();
+            Warehouses = LoadWarehouses();
         }
         public static FileDataListSingleton GetInstance()
         {
@@ -37,15 +40,16 @@ namespace FurnitureServiceFileImplement
             SaveComponents();
             SaveOrders();
             SaveFurnitures();
+            SaveWarehouses();
         }
         private List<Component> LoadComponents()
         {
-            var list = new List<Component>();
+            List<Component> list = new List<Component>();
             if (File.Exists(ComponentFileName))
             {
                 XDocument xDocument = XDocument.Load(ComponentFileName);
-                var xElements = xDocument.Root.Elements("Component").ToList();
-                foreach (var elem in xElements)
+                List<XElement> xElements = xDocument.Root.Elements("Component").ToList();
+                foreach (XElement elem in xElements)
                 {
                     list.Add(new Component
                     {
@@ -59,12 +63,12 @@ namespace FurnitureServiceFileImplement
         private List<Order> LoadOrders()
         {
             // прописать логику
-            var list = new List<Order>();
+            List<Order> list = new List<Order>();
             if (File.Exists(OrderFileName))
             {
                 XDocument xDocument = XDocument.Load(OrderFileName);
-                var xElements = xDocument.Root.Elements("Order").ToList();
-                foreach (var elem in xElements)
+                List<XElement> xElements = xDocument.Root.Elements("Order").ToList();
+                foreach (XElement elem in xElements)
                 {
                     list.Add(new Order
                     {
@@ -86,15 +90,15 @@ namespace FurnitureServiceFileImplement
         }
         private List<Furniture> LoadFurnitures()
         {
-            var list = new List<Furniture>();
+            List<Furniture> list = new List<Furniture>();
             if (File.Exists(FurnitureFileName))
             {
                 XDocument xDocument = XDocument.Load(FurnitureFileName);
-                var xElements = xDocument.Root.Elements("Furniture").ToList();
-                foreach (var elem in xElements)
+                List<XElement> xElements = xDocument.Root.Elements("Furniture").ToList();
+                foreach (XElement elem in xElements)
                 {
-                    var furnitureComp = new Dictionary<int, int>();
-                    foreach (var component in elem.Element("FurnitureComponents").Elements("FurnitureComponent").ToList())
+                    Dictionary<int, int> furnitureComp = new Dictionary<int, int>();
+                    foreach (XElement component in elem.Element("FurnitureComponents").Elements("FurnitureComponent").ToList())
                     {
                         furnitureComp.Add(Convert.ToInt32(component.Element("Key").Value), Convert.ToInt32(component.Element("Value").Value));
                     }
@@ -109,12 +113,43 @@ namespace FurnitureServiceFileImplement
             }
             return list;
         }
+        private List<Warehouse> LoadWarehouses()
+        {
+            List<Warehouse> list = new List<Warehouse>();
+
+            if (File.Exists(WarehouseFileName))
+            {
+                XDocument xDocument = XDocument.Load(WarehouseFileName);
+
+                List<XElement> xElements = xDocument.Root.Elements("Warehouse").ToList();
+
+                foreach (XElement warehouse in xElements)
+                {
+                    Dictionary<int, int> warehouseComponents = new Dictionary<int, int>();
+
+                    foreach (XElement component in warehouse.Element("WarehouseComponents").Elements("WarehouseComponent").ToList())
+                    {
+                        warehouseComponents.Add(Convert.ToInt32(component.Element("Key").Value), Convert.ToInt32(component.Element("Value").Value));
+                    }
+
+                    list.Add(new Warehouse
+                    {
+                        Id = Convert.ToInt32(warehouse.Attribute("Id").Value),
+                        WarehouseName = warehouse.Element("WarehouseName").Value,
+                        FullNameOfTheHead = warehouse.Element("FullNameOfTheHead").Value,
+                        DateCreate = DateTime.ParseExact(warehouse.Element("DateCreate").Value, "dd.MM.yyyy HH:mm:ss", CultureInfo.InvariantCulture),
+                        WarehouseComponents = warehouseComponents
+                    });
+                }
+            }
+            return list;
+        }
         private void SaveComponents()
         {
             if (Components != null)
             {
-                var xElement = new XElement("Components");
-                foreach (var component in Components)
+                XElement xElement = new XElement("Components");
+                foreach (Component component in Components)
                 {
                     xElement.Add(new XElement("Component",
                     new XAttribute("Id", component.Id),
@@ -129,8 +164,8 @@ namespace FurnitureServiceFileImplement
             // прописать логику
             if (Orders != null)
             {
-                var xElement = new XElement("Orders");
-                foreach (var order in Orders)
+                XElement xElement = new XElement("Orders");
+                foreach (Order order in Orders)
                 {
                     xElement.Add(new XElement("Order",
                     new XAttribute("Id", order.Id),
@@ -149,11 +184,11 @@ namespace FurnitureServiceFileImplement
         {
             if (Furnitures != null)
             {
-                var xElement = new XElement("Furnitures");
-                foreach (var furniture in Furnitures)
+                XElement xElement = new XElement("Furnitures");
+                foreach (Furniture furniture in Furnitures)
                 {
-                    var compElement = new XElement("FurnitureComponents");
-                    foreach (var component in furniture.FurnitureComponents)
+                    XElement compElement = new XElement("FurnitureComponents");
+                    foreach (KeyValuePair<int, int> component in furniture.FurnitureComponents)
                     {
                         compElement.Add(new XElement("FurnitureComponent",
                         new XElement("Key", component.Key),
@@ -167,6 +202,34 @@ namespace FurnitureServiceFileImplement
                 }
                 XDocument xDocument = new XDocument(xElement);
                 xDocument.Save(FurnitureFileName);
+            }
+        }
+        private void SaveWarehouses()
+        {
+            if (Warehouses != null)
+            {
+                var xElement = new XElement("Warehouses");
+
+                foreach (var warehouse in Warehouses)
+                {
+                    var compElement = new XElement("WarehouseComponents");
+
+                    foreach (var component in warehouse.WarehouseComponents)
+                    {
+                        compElement.Add(new XElement("WarehouseComponent",
+                            new XElement("Key", component.Key),
+                            new XElement("Value", component.Value)));
+                    }
+
+                    xElement.Add(new XElement("Warehouse",
+                        new XAttribute("Id", warehouse.Id),
+                        new XElement("WarehouseName", warehouse.WarehouseName),
+                        new XElement("FullNameOfTheHead", warehouse.FullNameOfTheHead),
+                        new XElement("DateCreate", warehouse.DateCreate.ToString()),
+                        compElement));
+                }
+                XDocument xDocument = new XDocument(xElement);
+                xDocument.Save(WarehouseFileName);
             }
         }
     }

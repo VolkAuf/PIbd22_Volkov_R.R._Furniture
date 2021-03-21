@@ -19,5 +19,7 @@ namespace FurnitureServiceBusinessLogic.Interfaces
         void Update(WarehouseBindingModel model);
 
         void Delete(WarehouseBindingModel model);
+
+        bool CheckRemove(Dictionary<int, (string, int)> components, int furnitureCount);
     }
 }

@@ -187,5 +187,10 @@ namespace FurnitureServiceListImplement.Implements
                 }
             }
         }
+
+        public bool CheckRemove(Dictionary<int, (string, int)> components, int furnitureCount)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
