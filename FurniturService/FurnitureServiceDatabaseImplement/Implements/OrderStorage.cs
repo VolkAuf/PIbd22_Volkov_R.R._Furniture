@@ -40,7 +40,7 @@ namespace FurnitureServiceDatabaseImplement.Implements
             using (FurnitureServiceDatabase context = new FurnitureServiceDatabase())
             {
                 return context.Orders
-                .Where(rec => rec.FurnitureId == model.FurnitureId)
+                .Where(rec => rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo)
                 .Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
