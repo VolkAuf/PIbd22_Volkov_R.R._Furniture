@@ -19,7 +19,7 @@ namespace FurnitureServiceFileImplement.Implements
         }
 
         private Warehouse CreateModel(WarehouseBindingModel model, Warehouse warehouse)
-        {
+        {   
             warehouse.WarehouseName = model.WarehouseName;
             warehouse.FullNameOfTheHead = model.FullNameOfTheHead;
 
