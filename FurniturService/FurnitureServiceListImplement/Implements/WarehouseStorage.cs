@@ -174,18 +174,5 @@ namespace FurnitureServiceListImplement.Implements
 
             CreateModel(model, tempWarehouse);
         }
-
-        public void Print()
-        {
-            foreach (Warehouse warehouse in source.Warehouses)
-            {
-                Console.WriteLine(warehouse.WarehouseName + " " + warehouse.FullNameOfTheHead + " " + warehouse.DateCreate);
-                foreach (KeyValuePair<int, int> keyValue in warehouse.WarehouseComponents)
-                {
-                    string componentName = source.Components.FirstOrDefault(component => component.Id == keyValue.Key).ComponentName;
-                    Console.WriteLine(componentName + " " + keyValue.Value);
-                }
-            }
-        }
     }
 }
