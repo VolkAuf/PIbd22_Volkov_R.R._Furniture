@@ -13,11 +13,14 @@ namespace FurniturServiceView
         public new IUnityContainer Container { get; set; }
         private readonly FurnitureLogic _logicF;
         private readonly OrderLogic _logicO;
-        public FormCreateOrder(FurnitureLogic logiFP, OrderLogic logicO)
+        private readonly ClientLogic _logicCl;
+
+        public FormCreateOrder(FurnitureLogic logiFP, OrderLogic logicO, ClientLogic logicCl)
         {
             InitializeComponent();
             _logicF = logiFP;
             _logicO = logicO;
+            _logicCl = logicCl;
         }
         private void FormCreateOrder_Load(object sender, EventArgs e)
         {
@@ -32,6 +35,15 @@ namespace FurniturServiceView
                     comboBoxFurniture.ValueMember = "Id";
                     comboBoxFurniture.DataSource = list;
                     comboBoxFurniture.SelectedItem = null;
+                }
+
+                var listCl = _logicCl.Read(null);
+                if (list != null)
+                {
+                    comboBoxClient.DisplayMember = "ClientFIO";
+                    comboBoxClient.ValueMember = "Id";
+                    comboBoxClient.DataSource = listCl;
+                    comboBoxClient.SelectedItem = null;
                 }
             }
             catch (Exception ex)
@@ -83,7 +95,9 @@ namespace FurniturServiceView
                 {
                     FurnituretId = Convert.ToInt32(comboBoxFurniture.SelectedValue),
                     Count = Convert.ToInt32(textBoxCount.Text),
-                    Sum = Convert.ToDecimal(textBoxSum.Text)
+                    Sum = Convert.ToDecimal(textBoxSum.Text),
+                    ClientId = Convert.ToInt32(comboBoxClient.SelectedValue),
+
                 });
                 MessageBox.Show("Сохранение прошло успешно", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 DialogResult = DialogResult.OK;
