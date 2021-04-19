@@ -21,7 +21,7 @@ namespace FurnitureServiceDatabaseImplement.Implements
                 {
                     Id = rec.Id,
                     FurnitureId = rec.FurnitureId,
-                    FurnitureName = context.Furnitures.FirstOrDefault(pr => pr.Id == rec.FurnitureId).FurnitureName,
+                    FurnitureName = rec.Furnitures.FurnitureName,
                     Count = rec.Count,
                     Sum = rec.Sum,
                     Status = rec.Status,
@@ -40,12 +40,13 @@ namespace FurnitureServiceDatabaseImplement.Implements
             using (FurnitureServiceDatabase context = new FurnitureServiceDatabase())
             {
                 return context.Orders
-                .Where(rec => rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo)
+                .Include(rec => rec.Furnitures)
+                .Where(rec => rec.FurnitureId == model.FurnitureId)
                 .Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
                     FurnitureId = rec.FurnitureId,
-                    FurnitureName = context.Furnitures.FirstOrDefault(pr => pr.Id == rec.FurnitureId).FurnitureName,
+                    FurnitureName = rec.Furnitures.FurnitureName,
                     Count = rec.Count,
                     Sum = rec.Sum,
                     Status = rec.Status,
@@ -64,13 +65,14 @@ namespace FurnitureServiceDatabaseImplement.Implements
             using (FurnitureServiceDatabase context = new FurnitureServiceDatabase())
             {
                 Order order = context.Orders
+                .Include(rec => rec.Furnitures)
                 .FirstOrDefault(rec => rec.Id == model.Id);
                 return order != null ?
                 new OrderViewModel
                 {
                     Id = order.Id,
                     FurnitureId = order.FurnitureId,
-                    FurnitureName = context.Furnitures.FirstOrDefault(rec => rec.Id == order.FurnitureId)?.FurnitureName,
+                    FurnitureName = order.Furnitures.FurnitureName,
                     Count = order.Count,
                     Sum = order.Sum,
                     Status = order.Status,
