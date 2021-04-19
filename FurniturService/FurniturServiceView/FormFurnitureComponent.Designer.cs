@@ -41,14 +41,14 @@
             this.comboBoxComponent.FormattingEnabled = true;
             this.comboBoxComponent.Location = new System.Drawing.Point(112, 13);
             this.comboBoxComponent.Name = "comboBoxComponent";
-            this.comboBoxComponent.Size = new System.Drawing.Size(172, 24);
+            this.comboBoxComponent.Size = new System.Drawing.Size(184, 24);
             this.comboBoxComponent.TabIndex = 0;
             // 
             // textBoxCount
             // 
             this.textBoxCount.Location = new System.Drawing.Point(112, 43);
             this.textBoxCount.Name = "textBoxCount";
-            this.textBoxCount.Size = new System.Drawing.Size(172, 22);
+            this.textBoxCount.Size = new System.Drawing.Size(184, 22);
             this.textBoxCount.TabIndex = 1;
             // 
             // labelComponent
@@ -73,7 +73,7 @@
             // 
             this.buttonSave.Location = new System.Drawing.Point(112, 71);
             this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(75, 23);
+            this.buttonSave.Size = new System.Drawing.Size(87, 23);
             this.buttonSave.TabIndex = 4;
             this.buttonSave.Text = "Сохранить";
             this.buttonSave.UseVisualStyleBackColor = true;
@@ -83,7 +83,7 @@
             // 
             this.buttonCancel.Location = new System.Drawing.Point(209, 71);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(75, 23);
+            this.buttonCancel.Size = new System.Drawing.Size(87, 23);
             this.buttonCancel.TabIndex = 5;
             this.buttonCancel.Text = "Отмена";
             this.buttonCancel.UseVisualStyleBackColor = true;
