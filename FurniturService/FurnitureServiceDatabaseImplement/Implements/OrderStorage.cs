@@ -40,6 +40,7 @@ namespace FurnitureServiceDatabaseImplement.Implements
             using (FurnitureServiceDatabase context = new FurnitureServiceDatabase())
             {
                 return context.Orders
+                .Include(rec => rec.Furnitures)
                 .Where(rec => rec.FurnitureId == model.FurnitureId)
                 .Select(rec => new OrderViewModel
                 {
@@ -64,6 +65,7 @@ namespace FurnitureServiceDatabaseImplement.Implements
             using (FurnitureServiceDatabase context = new FurnitureServiceDatabase())
             {
                 Order order = context.Orders
+                .Include(rec => rec.Furnitures)
                 .FirstOrDefault(rec => rec.Id == model.Id);
                 return order != null ?
                 new OrderViewModel
