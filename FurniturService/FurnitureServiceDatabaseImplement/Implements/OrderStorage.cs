@@ -21,7 +21,7 @@ namespace FurnitureServiceDatabaseImplement.Implements
                 {
                     Id = rec.Id,
                     FurnitureId = rec.FurnitureId,
-                    FurnitureName = context.Furnitures.FirstOrDefault(pr => pr.Id == rec.FurnitureId).FurnitureName,
+                    FurnitureName = rec.Furnitures.FurnitureName,
                     Count = rec.Count,
                     Sum = rec.Sum,
                     Status = rec.Status,
@@ -46,7 +46,7 @@ namespace FurnitureServiceDatabaseImplement.Implements
                 {
                     Id = rec.Id,
                     FurnitureId = rec.FurnitureId,
-                    FurnitureName = context.Furnitures.FirstOrDefault(pr => pr.Id == rec.FurnitureId).FurnitureName,
+                    FurnitureName = rec.Furnitures.FurnitureName,
                     Count = rec.Count,
                     Sum = rec.Sum,
                     Status = rec.Status,
@@ -72,7 +72,7 @@ namespace FurnitureServiceDatabaseImplement.Implements
                 {
                     Id = order.Id,
                     FurnitureId = order.FurnitureId,
-                    FurnitureName = context.Furnitures.FirstOrDefault(rec => rec.Id == order.FurnitureId)?.FurnitureName,
+                    FurnitureName = order.Furnitures.FurnitureName,
                     Count = order.Count,
                     Sum = order.Sum,
                     Status = order.Status,
