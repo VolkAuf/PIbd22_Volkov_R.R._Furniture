@@ -30,7 +30,7 @@ namespace FurnitureServiceBusinessLogic.BusinessLogics
         {
             _orderStorage.Insert(new OrderBindingModel
             {
-                FurnitureId = model.FurnituretId,
+                FurnitureId = model.FurnitureId,
                 ClientId = model.ClientId,
                 Count = model.Count,
                 Sum = model.Sum,

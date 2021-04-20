@@ -16,9 +16,10 @@ namespace FurnitureServiceRestApi.Controllers
         private readonly OrderLogic _order;
         private readonly FurnitureLogic _furniture;
         private readonly OrderLogic _main;
-        public MainController(OrderLogic order, FurnitureLogic furniture)
+        public MainController(OrderLogic order, FurnitureLogic furniture, OrderLogic main)
         {
             _order = order;
+            _main = main;
             _furniture = furniture;
         }
         [HttpGet]
@@ -28,6 +29,6 @@ namespace FurnitureServiceRestApi.Controllers
         [HttpGet]
         public List<OrderViewModel> GetOrders(int clientId) => _order.Read(new OrderBindingModel { ClientId = clientId });
         [HttpPost]
-        public void CreateOrder(CreateOrderBindingModel model) => _order.CreateOrder(model);
+        public void CreateOrder(CreateOrderBindingModel model) => _main.CreateOrder(model);
     }
 }

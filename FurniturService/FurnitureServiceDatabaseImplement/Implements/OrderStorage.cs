@@ -17,6 +17,7 @@ namespace FurnitureServiceDatabaseImplement.Implements
             {
                 return context.Orders
                 .Include(rec => rec.Furnitures)
+                .Include(rec => rec.Clients)
                 .Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
@@ -28,7 +29,7 @@ namespace FurnitureServiceDatabaseImplement.Implements
                     Status = rec.Status,
                     DateCreate = rec.DateCreate,
                     DateImplement = rec.DateImplement,
-                    ClientFIO = rec.ClientFIO,
+                    ClientFIO = rec.Clients.ClientFIO
                 })
                 .ToList();
             }
@@ -42,6 +43,7 @@ namespace FurnitureServiceDatabaseImplement.Implements
             using (FurnitureServiceDatabase context = new FurnitureServiceDatabase())
             {
                 return context.Orders
+                .Include(rec => rec.Clients)
                 .Where(rec => (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate.Date == model.DateCreate.Date) ||
                 (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date) ||
                 (rec.ClientId == model.ClientId))
@@ -56,8 +58,8 @@ namespace FurnitureServiceDatabaseImplement.Implements
                     Status = rec.Status,
                     DateCreate = rec.DateCreate,
                     DateImplement = rec.DateImplement,
-                    ClientFIO = rec.ClientFIO,
-                })
+                    ClientFIO = rec.Clients.ClientFIO,
+                }) 
                 .ToList();
             }
         }
@@ -70,6 +72,7 @@ namespace FurnitureServiceDatabaseImplement.Implements
             using (FurnitureServiceDatabase context = new FurnitureServiceDatabase())
             {
                 Order order = context.Orders
+                .Include(rec => rec.Clients)
                 .FirstOrDefault(rec => rec.Id == model.Id);
                 return order != null ?
                 new OrderViewModel
@@ -83,7 +86,7 @@ namespace FurnitureServiceDatabaseImplement.Implements
                     Status = order.Status,
                     DateCreate = order.DateCreate,
                     DateImplement = order.DateImplement,
-                    ClientFIO = order.ClientFIO,
+                    ClientFIO = order.Clients.ClientFIO
                 } :
                 null;
             }

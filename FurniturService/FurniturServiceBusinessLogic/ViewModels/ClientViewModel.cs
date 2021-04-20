@@ -6,6 +6,7 @@ using System.Text;
 
 namespace FurnitureServiceBusinessLogic.ViewModels
 {
+    [DataContract]
     public class ClientViewModel
     {
         [DataMember]

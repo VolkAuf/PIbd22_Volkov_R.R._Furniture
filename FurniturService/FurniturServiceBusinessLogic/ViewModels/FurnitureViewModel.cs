@@ -4,6 +4,7 @@ using System.Runtime.Serialization;
 
 namespace FurnitureServiceBusinessLogic.ViewModels
 {
+    [DataContract]
     public class FurnitureViewModel
     {
         [DataMember]

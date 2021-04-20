@@ -39,8 +39,9 @@ namespace FurnitureServiceClientApp.Controllers
             if (!string.IsNullOrEmpty(login) && !string.IsNullOrEmpty(password) && !string.IsNullOrEmpty(fio))
             {
                 //прописать запрос
-                APIClient.PostRequest("api/client/privace", new ClientBindingModel
+                APIClient.PostRequest("api/client/updatedata", new ClientBindingModel
                 {
+                    Id = Program.Client.Id,
                     ClientFIO = fio,
                     Email = login,
                     Password = password,
@@ -102,7 +103,7 @@ namespace FurnitureServiceClientApp.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            ViewBag.Products = APIClient.GetRequest<List<FurnitureViewModel>>("api/main/getfurniturelist");
+            ViewBag.Furnitures = APIClient.GetRequest<List<FurnitureViewModel>>("api/main/getfurniturelist");
             return View();
         }
         [HttpPost]
@@ -113,8 +114,9 @@ namespace FurnitureServiceClientApp.Controllers
                 return;
             }
             //прописать запрос
-            APIClient.PostRequest("api/client/create", new OrderBindingModel
+            APIClient.PostRequest("api/main/createorder", new CreateOrderBindingModel
             {
+               ClientId = (int)Program.Client.Id,
                FurnitureId = furniture,
                Count = count,
                Sum = sum,

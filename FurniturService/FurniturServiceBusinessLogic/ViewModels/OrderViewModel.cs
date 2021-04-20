@@ -8,6 +8,7 @@ namespace FurnitureServiceBusinessLogic.ViewModels
     /// <summary>
     /// Заказ
     /// </summary>
+    [DataContract]
     public class OrderViewModel
     {
         [DataMember]
@@ -17,11 +18,11 @@ namespace FurnitureServiceBusinessLogic.ViewModels
         public int ClientId { get; set; }
 
         [DataMember]
-        [DisplayName("Клиент")]
-        public string ClientFIO { get; set; }
+        public int FurnitureId { get; set; }
 
         [DataMember]
-        public int FurnitureId { get; set; }
+        [DisplayName("Клиент")]
+        public string ClientFIO { get; set; }
 
         [DataMember]
         [DisplayName("Мебель")]

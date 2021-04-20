@@ -7,6 +7,7 @@ namespace FurnitureServiceBusinessLogic.BindingModels
     /// <summary>
     /// Заказ
     /// </summary>
+    [DataContract]
     public class OrderBindingModel
     {
         [DataMember]

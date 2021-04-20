@@ -14,7 +14,7 @@ namespace FurnitureServiceBusinessLogic.BindingModels
         public int ClientId { get; set; }
 
         [DataMember]
-        public int FurnituretId { get; set; }
+        public int FurnitureId { get; set; }
 
         [DataMember]
         public int Count { get; set; }

@@ -5,6 +5,7 @@ using System.Text;
 
 namespace FurnitureServiceBusinessLogic.BindingModels
 {
+    [DataContract]
     public class ClientBindingModel
     {
         [DataMember]

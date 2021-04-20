@@ -93,7 +93,7 @@ namespace FurniturServiceView
             {
                 _logicO.CreateOrder(new CreateOrderBindingModel
                 {
-                    FurnituretId = Convert.ToInt32(comboBoxFurniture.SelectedValue),
+                    FurnitureId = Convert.ToInt32(comboBoxFurniture.SelectedValue),
                     Count = Convert.ToInt32(textBoxCount.Text),
                     Sum = Convert.ToDecimal(textBoxSum.Text),
                     ClientId = Convert.ToInt32(comboBoxClient.SelectedValue),
