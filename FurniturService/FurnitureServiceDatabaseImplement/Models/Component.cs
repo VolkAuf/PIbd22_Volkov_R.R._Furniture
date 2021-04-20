@@ -15,5 +15,7 @@ namespace FurnitureServiceDatabaseImplement.Models
         public string ComponentName { get; set; }
         [ForeignKey("ComponentId")]
         public virtual List<FurnitureComponent> FurnitureComponents { get; set; }
+        [ForeignKey("ComponentId")]
+        public virtual List<WarehouseComponent> WarehouseComponents { get; set; }
     }
 }
