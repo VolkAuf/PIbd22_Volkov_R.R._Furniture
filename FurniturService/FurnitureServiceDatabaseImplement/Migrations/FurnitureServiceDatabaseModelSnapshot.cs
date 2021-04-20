@@ -103,6 +103,28 @@ namespace FurnitureServiceDatabaseImplement.Migrations
                     b.ToTable("FurnitureComponents");
                 });
 
+            modelBuilder.Entity("FurnitureServiceDatabaseImplement.Models.Implementer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ImplementerFIO")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PauseTime")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WorkingTime")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Implementers");
+                });
+
             modelBuilder.Entity("FurnitureServiceDatabaseImplement.Models.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -125,6 +147,9 @@ namespace FurnitureServiceDatabaseImplement.Migrations
                     b.Property<int>("FurnitureId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ImplementerId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -136,6 +161,8 @@ namespace FurnitureServiceDatabaseImplement.Migrations
                     b.HasIndex("ClientId");
 
                     b.HasIndex("FurnitureId");
+
+                    b.HasIndex("ImplementerId");
 
                     b.ToTable("Orders");
                 });
@@ -168,6 +195,10 @@ namespace FurnitureServiceDatabaseImplement.Migrations
                         .HasForeignKey("FurnitureId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("FurnitureServiceDatabaseImplement.Models.Implementer", "Implementer")
+                        .WithMany("Orders")
+                        .HasForeignKey("ImplementerId");
                 });
 #pragma warning restore 612, 618
         }

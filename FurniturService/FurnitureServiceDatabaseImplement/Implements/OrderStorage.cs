@@ -1,4 +1,5 @@
 ﻿using FurnitureServiceBusinessLogic.BindingModels;
+using FurnitureServiceBusinessLogic.Enums;
 using FurnitureServiceBusinessLogic.Interfaces;
 using FurnitureServiceBusinessLogic.ViewModels;
 using FurnitureServiceDatabaseImplement.Models;
@@ -18,11 +19,14 @@ namespace FurnitureServiceDatabaseImplement.Implements
                 return context.Orders
                 .Include(rec => rec.Furnitures)
                 .Include(rec => rec.Clients)
+                .Include(rec => rec.Implementer)
                 .Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
                     FurnitureId = rec.FurnitureId,
                     ClientId = rec.ClientId,
+                    ImplementerId = rec.ImplementerId,
+                    ImplementerFIO = rec.Implementer.ImplementerFIO,
                     FurnitureName = rec.Furnitures.FurnitureName,
                     Count = rec.Count,
                     Sum = rec.Sum,
@@ -45,14 +49,23 @@ namespace FurnitureServiceDatabaseImplement.Implements
                 return context.Orders
                 .Include(rec => rec.Furnitures)
                 .Include(rec => rec.Clients)
-                .Where(rec => (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate.Date == model.DateCreate.Date) ||
-                (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date) ||
-                (rec.ClientId == model.ClientId))
+                .Include(rec => rec.Implementer)
+                .Where(rec => (!model.DateFrom.HasValue && !model.DateTo.HasValue &&
+                rec.DateCreate.Date == model.DateCreate.Date) ||
+                (model.DateFrom.HasValue && model.DateTo.HasValue &&
+                rec.DateCreate.Date >= model.DateFrom.Value.Date && 
+                rec.DateCreate.Date <= model.DateTo.Value.Date) ||
+                (model.ClientId.HasValue && rec.ClientId == model.ClientId) ||
+                (model.FreeOrders.HasValue && model.FreeOrders.Value && 
+                rec.Status == OrderStatus.Принят) || (model.ImplementerId.HasValue &&
+                rec.ImplementerId == model.ImplementerId && rec.Status == OrderStatus.Выполняется))
                 .Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
                     FurnitureId = rec.FurnitureId,
                     ClientId = rec.ClientId,
+                    ImplementerId = rec.ImplementerId,
+                    ImplementerFIO = rec.Implementer.ImplementerFIO,
                     FurnitureName = rec.Furnitures.FurnitureName,
                     Count = rec.Count,
                     Sum = rec.Sum,
@@ -75,6 +88,7 @@ namespace FurnitureServiceDatabaseImplement.Implements
                 Order order = context.Orders
                 .Include(rec => rec.Clients)
                 .Include(rec => rec.Furnitures)
+                .Include(rec => rec.Implementer)
                 .FirstOrDefault(rec => rec.Id == model.Id);
                 return order != null ?
                 new OrderViewModel
@@ -82,6 +96,8 @@ namespace FurnitureServiceDatabaseImplement.Implements
                     Id = order.Id,
                     FurnitureId = order.FurnitureId,
                     ClientId = order.ClientId,
+                    ImplementerId = order.ImplementerId,
+                    ImplementerFIO = order.ImplementerId.HasValue ? order.Implementer.ImplementerFIO : string.Empty,
                     FurnitureName = order.Furnitures.FurnitureName,
                     Count = order.Count,
                     Sum = order.Sum,
@@ -97,19 +113,7 @@ namespace FurnitureServiceDatabaseImplement.Implements
         {
             using (FurnitureServiceDatabase context = new FurnitureServiceDatabase())
             {
-                Order order = new Order
-                {
-                    FurnitureId = model.FurnitureId,
-                    ClientId = (int) model.ClientId,
-                    Count = model.Count,
-                    Sum = model.Sum,
-                    Status = model.Status,
-                    DateCreate = model.DateCreate,
-                    DateImplement = model.DateImplement,
-                };
-                context.Orders.Add(order);
-                context.SaveChanges();
-                CreateModel(model, order);
+                context.Orders.Add(CreateModel(model, new Order()));
                 context.SaveChanges();
             }
         }
@@ -117,19 +121,12 @@ namespace FurnitureServiceDatabaseImplement.Implements
         {
             using (FurnitureServiceDatabase context = new FurnitureServiceDatabase())
             {
-                Order element = context.Orders.FirstOrDefault(rec => rec.Id == model.Id);
-                if (element == null)
+                var order = context.Orders.FirstOrDefault(rec => rec.Id == model.Id);
+                if (order == null)
                 {
-                    throw new Exception("Элемент не найден");
+                    throw new Exception("Заказ не найден");
                 }
-                element.FurnitureId = model.FurnitureId;
-                element.ClientId = (int) model.ClientId;
-                element.Count = model.Count;
-                element.Sum = model.Sum;
-                element.Status = model.Status;
-                element.DateCreate = model.DateCreate;
-                element.DateImplement = model.DateImplement;
-                CreateModel(model, element);
+                CreateModel(model, order);
                 context.SaveChanges();
             }
         }
@@ -137,43 +134,28 @@ namespace FurnitureServiceDatabaseImplement.Implements
         {
             using (FurnitureServiceDatabase context = new FurnitureServiceDatabase())
             {
-                Order element = context.Orders.FirstOrDefault(rec => rec.Id == model.Id);
-                if (element != null)
+                Order order = context.Orders.FirstOrDefault(rec => rec.Id == model.Id);
+                if (order != null)
                 {
-                    context.Orders.Remove(element);
+                    context.Orders.Remove(order);
                     context.SaveChanges();
                 }
                 else
                 {
-                    throw new Exception("Элемент не найден");
+                    throw new Exception("Заказ не найден");
                 }
             }
         }
         private Order CreateModel(OrderBindingModel model, Order order)
         {
-            if (model == null)
-            {
-                return null;
-            }
-
-            using (FurnitureServiceDatabase context = new FurnitureServiceDatabase())
-            {
-                Furniture element = context.Furnitures.FirstOrDefault(rec => rec.Id == model.FurnitureId);
-                if (element != null)
-                {
-                    if (element.Orders == null)
-                    {
-                        element.Orders = new List<Order>();
-                    }
-                    element.Orders.Add(order);
-                    context.Furnitures.Update(element);
-                    context.SaveChanges();
-                }
-                else
-                {
-                    throw new Exception("Элемент не найден");
-                }
-            }
+            order.ClientId = (int)model.ClientId;
+            order.FurnitureId = model.FurnitureId;
+            order.Count = model.Count;
+            order.Sum = model.Sum;
+            order.Status = model.Status;
+            order.DateCreate = model.DateCreate;
+            order.ImplementerId = model.ImplementerId;
+            order.DateImplement = model.DateImplement;
             return order;
         }
     }

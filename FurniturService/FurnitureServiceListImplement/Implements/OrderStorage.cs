@@ -106,7 +106,7 @@ namespace FurnitureServiceListImplement.Implements
             order.DateImplement = model.DateImplement;
             order.Status = model.Status;
             order.Sum = model.Sum;
-            order.ClientId = model.ClientId;
+            order.ClientId = (int) model.ClientId;
             return order;
         }
         private OrderViewModel CreateModel(Order order)
