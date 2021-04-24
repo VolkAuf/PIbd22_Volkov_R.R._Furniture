@@ -279,6 +279,18 @@
     <Compile Include="FormReportOrders.Designer.cs">
       <DependentUpon>FormReportOrders.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormReportOrdersDate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReportOrdersDate.Designer.cs">
+      <DependentUpon>FormReportOrdersDate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormReportWarehouseComponents.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReportWarehouseComponents.Designer.cs">
+      <DependentUpon>FormReportWarehouseComponents.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormWarehouse.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -322,6 +334,13 @@
       <DependentUpon>FormMain.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormReportOrdersDate.resx">
+      <DependentUpon>FormReportOrdersDate.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormReportWarehouseComponents.resx">
+      <DependentUpon>FormReportWarehouseComponents.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormWarehouse.resx">
       <DependentUpon>FormWarehouse.cs</DependentUpon>
     </EmbeddedResource>
@@ -347,10 +366,12 @@
       <DependentUpon>FormWarehouses .cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ReportFurniture.rdlc" />
+    <EmbeddedResource Include="ReportOrders.rdlc" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\FurnitureServiceBusinessLogic.ViewModels.ComponentViewModel.datasource" />
     <None Include="Properties\DataSources\FurnitureServiceBusinessLogic.ViewModels.FurnitureViewModel.datasource" />
     <None Include="Properties\DataSources\FurnitureServiceBusinessLogic.ViewModels.OrderViewModel.datasource" />
+    <None Include="Properties\DataSources\FurnitureServiceBusinessLogic.ViewModels.ReportOrdersDateViewModel.datasource" />
     <None Include="Properties\DataSources\FurnitureServiceBusinessLogic.ViewModels.ReportOrdersViewModel.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

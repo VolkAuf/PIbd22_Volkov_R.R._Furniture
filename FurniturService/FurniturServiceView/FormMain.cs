@@ -144,5 +144,33 @@ namespace FurniturServiceView
             var form = Container.Resolve<FormWarehouseReplenishment>();
             form.ShowDialog();
         }
+
+        private void списокКомпонентовНаСкладахToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormReportWarehouseComponents>();
+            form.ShowDialog();
+        }
+
+        private void списокСкладовToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var dialog = new SaveFileDialog { Filter = "docx|*.docx" })
+            {
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    _reportLogic.SaveWarehousesToWordFile(new ReportBindingModel
+                    {
+                        FileName = dialog.FileName
+                    });
+
+                    MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+
+        private void заказыЗаВесьПериодToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormReportOrdersDate>();
+            form.ShowDialog();
+        }
     }
 }

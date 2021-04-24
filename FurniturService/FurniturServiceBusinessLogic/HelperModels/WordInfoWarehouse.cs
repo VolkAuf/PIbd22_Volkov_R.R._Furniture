@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FurnitureServiceBusinessLogic.HelperModels
 {
-    public class WarehouseWordInfo
+    public class WordInfoWarehouse
     {
         public string FileName { get; set; }
         public string Title { get; set; }
