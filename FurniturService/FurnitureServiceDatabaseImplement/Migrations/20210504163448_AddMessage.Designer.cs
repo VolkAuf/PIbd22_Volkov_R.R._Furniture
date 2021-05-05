@@ -4,14 +4,16 @@ using FurnitureServiceDatabaseImplement;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FurnitureServiceDatabaseImplement.Migrations
 {
     [DbContext(typeof(FurnitureServiceDatabase))]
-    partial class FurnitureServiceDatabaseModelSnapshot : ModelSnapshot
+    [Migration("20210504163448_AddMessage")]
+    partial class AddMessage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -149,7 +151,7 @@ namespace FurnitureServiceDatabaseImplement.Migrations
 
                     b.HasIndex("ClientId");
 
-                    b.ToTable("MessageInfoes");
+                    b.ToTable("MessageInfos");
                 });
 
             modelBuilder.Entity("FurnitureServiceDatabaseImplement.Models.Order", b =>
@@ -212,7 +214,7 @@ namespace FurnitureServiceDatabaseImplement.Migrations
             modelBuilder.Entity("FurnitureServiceDatabaseImplement.Models.MessageInfo", b =>
                 {
                     b.HasOne("FurnitureServiceDatabaseImplement.Models.Client", "Client")
-                        .WithMany("MessageInfoes")
+                        .WithMany("MessageInfos")
                         .HasForeignKey("ClientId");
                 });
 
