@@ -13,11 +13,13 @@ namespace FurnitureServiceBusinessLogic.BusinessLogics
         private readonly IComponentStorage _componentStorage;
         private readonly IFurnitureStorage _furnitureStorage;
         private readonly IOrderStorage _orderStorage;
-        public ReportLogic(IFurnitureStorage furnitureStorage, IComponentStorage componentStorage, IOrderStorage orderStorage)
+        private readonly IWarehouseStorage _warehouseStorage;
+        public ReportLogic(IFurnitureStorage furnitureStorage, IComponentStorage componentStorage, IOrderStorage orderStorage, IWarehouseStorage warehouseStorage)
         {
             _furnitureStorage = furnitureStorage;
             _componentStorage = componentStorage;
             _orderStorage = orderStorage;
+            _warehouseStorage = warehouseStorage;
         }
         /// <summary>
         /// Получение списка компонент с указанием, в каких изделиях используются
@@ -66,6 +68,47 @@ namespace FurnitureServiceBusinessLogic.BusinessLogics
             })
             .ToList();
         }
+        public List<ReportWarehouseComponentsViewModel> GetWarehouseComponents()
+        {
+            var components = _componentStorage.GetFullList();
+            var warehouses = _warehouseStorage.GetFullList();
+            var records = new List<ReportWarehouseComponentsViewModel>();
+
+            foreach (var warehouse in warehouses)
+            {
+                var record = new ReportWarehouseComponentsViewModel
+                {
+                    WarehouseName = warehouse.WarehouseName,
+                    TotalCount = 0,
+                    Components = new List<Tuple<string, int>>(),
+                };
+
+                foreach (var component in components)
+                {
+                    if (warehouse.WarehouseComponents.ContainsKey(component.Id))
+                    {
+                        record.Components.Add(new Tuple<string, int>(
+                            component.ComponentName, warehouse.WarehouseComponents[component.Id].Item2));
+
+                        record.TotalCount += warehouse.WarehouseComponents[component.Id].Item2;
+                    }
+                }
+                records.Add(record);
+            }
+            return records;
+        }
+        public List<ReportOrdersDateViewModel> GetOrdersDate()
+        {
+            return _orderStorage.GetFullList()
+                .GroupBy(order => order.DateCreate.ToShortDateString())
+                .Select(rec => new ReportOrdersDateViewModel
+                {
+                    Date = Convert.ToDateTime(rec.Key),
+                    Count = rec.Count(),
+                    Sum = rec.Sum(order => order.Sum)
+                })
+                .ToList();
+        }
         /// <summary>
         /// Сохранение компонент в файл-Word
         /// </summary>
@@ -79,6 +122,16 @@ namespace FurnitureServiceBusinessLogic.BusinessLogics
                 Furnitures = _furnitureStorage.GetFullList()
             });
         }
+        public void SaveWarehousesToWordFile(ReportBindingModel model)
+        {
+            SaveToWord.CreateWarehouseDoc(new WordInfoWarehouse
+            {
+                FileName = model.FileName,
+                Title = "Список складов",
+                Warehouses = _warehouseStorage.GetFullList()
+            });
+        }
+
         /// <summary>
         /// Сохранение компонент с указаеним продуктов в файл-Excel
         /// </summary>
@@ -90,6 +143,15 @@ namespace FurnitureServiceBusinessLogic.BusinessLogics
                 FileName = model.FileName,
                 Title = "Список изделий с компонентами",
                 FurnitureComponents = GetFurnitureComponent()
+            });
+        }
+        public void SaveWarehouseComponentsToExcelFile(ReportBindingModel model)
+        {
+            SaveToExcel.CreateWarehouseDoc(new ExcelInfoWarehouse
+            {
+                FileName = model.FileName,
+                Title = "Список складов",
+                WarehouseComponents = GetWarehouseComponents()
             });
         }
         /// <summary>
@@ -105,6 +167,15 @@ namespace FurnitureServiceBusinessLogic.BusinessLogics
                 DateFrom = model.DateFrom.Value,
                 DateTo = model.DateTo.Value,
                 Orders = GetOrders(model)
+            });
+        }
+        public void SaveOrdersDateToPdfFile(ReportBindingModel model)
+        {
+            SaveToPdf.CreateSummaryOrderInfoDoc(new PdfInfoOrdersDate
+            {
+                FileName = model.FileName,
+                Title = "Список заказов",
+                Orders = GetOrdersDate()
             });
         }
     }

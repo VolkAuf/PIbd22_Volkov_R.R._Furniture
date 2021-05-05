@@ -28,23 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.reportViewer = new Microsoft.Reporting.WinForms.ReportViewer();
+            this.components = new System.ComponentModel.Container();
             this.buttonMake = new System.Windows.Forms.Button();
             this.buttonToPdf = new System.Windows.Forms.Button();
             this.dateTimePickerFrom = new System.Windows.Forms.DateTimePicker();
             this.dateTimePickerTo = new System.Windows.Forms.DateTimePicker();
             this.labelFrom = new System.Windows.Forms.Label();
             this.labelTo = new System.Windows.Forms.Label();
+            this.reportViewer = new Microsoft.Reporting.WinForms.ReportViewer();
+            this.ReportOrdersDateViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.ReportOrdersDateViewModelBindingSource)).BeginInit();
             this.SuspendLayout();
-            // 
-            // reportViewer
-            // 
-            this.reportViewer.LocalReport.ReportEmbeddedResource = "FurniturServiceView.ReportFurniture.rdlc";
-            this.reportViewer.Location = new System.Drawing.Point(13, 45);
-            this.reportViewer.Name = "reportViewer";
-            this.reportViewer.ServerReport.BearerToken = null;
-            this.reportViewer.Size = new System.Drawing.Size(1055, 564);
-            this.reportViewer.TabIndex = 0;
             // 
             // buttonMake
             // 
@@ -98,33 +92,48 @@
             this.labelTo.TabIndex = 6;
             this.labelTo.Text = "По";
             // 
+            // reportViewer
+            // 
+            this.reportViewer.LocalReport.ReportEmbeddedResource = "FurniturServiceView.ReportFurniture.rdlc";
+            this.reportViewer.Location = new System.Drawing.Point(12, 51);
+            this.reportViewer.Name = "reportViewer";
+            this.reportViewer.ServerReport.BearerToken = null;
+            this.reportViewer.Size = new System.Drawing.Size(1062, 447);
+            this.reportViewer.TabIndex = 7;
+            // 
+            // ReportOrdersDateViewModelBindingSource
+            // 
+            this.ReportOrdersDateViewModelBindingSource.DataSource = typeof(FurnitureServiceBusinessLogic.ViewModels.ReportOrdersDateViewModel);
+            // 
             // FormReportOrders
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1086, 621);
+            this.ClientSize = new System.Drawing.Size(1086, 511);
+            this.Controls.Add(this.reportViewer);
             this.Controls.Add(this.labelTo);
             this.Controls.Add(this.labelFrom);
             this.Controls.Add(this.dateTimePickerTo);
             this.Controls.Add(this.dateTimePickerFrom);
             this.Controls.Add(this.buttonToPdf);
             this.Controls.Add(this.buttonMake);
-            this.Controls.Add(this.reportViewer);
             this.Name = "FormReportOrders";
             this.Text = "Заказы клиентов";
+            this.Load += new System.EventHandler(this.FormReportOrders_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.ReportOrdersDateViewModelBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private Microsoft.Reporting.WinForms.ReportViewer reportViewer;
         private System.Windows.Forms.Button buttonMake;
         private System.Windows.Forms.Button buttonToPdf;
         private System.Windows.Forms.DateTimePicker dateTimePickerFrom;
         private System.Windows.Forms.DateTimePicker dateTimePickerTo;
         private System.Windows.Forms.Label labelFrom;
         private System.Windows.Forms.Label labelTo;
+        private Microsoft.Reporting.WinForms.ReportViewer reportViewer;
+        private System.Windows.Forms.BindingSource ReportOrdersDateViewModelBindingSource;
     }
 }
