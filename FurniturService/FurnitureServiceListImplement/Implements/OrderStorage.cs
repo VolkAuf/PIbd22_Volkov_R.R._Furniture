@@ -33,7 +33,7 @@ namespace FurnitureServiceListImplement.Implements
             List<OrderViewModel> result = new List<OrderViewModel>();
             foreach (var order in source.Orders)
             {
-                if (order.DateCreate >= model.DateFrom && order.DateCreate <= model.DateTo)
+                if (order.FurnitureId.ToString().Contains(model.FurnitureId.ToString()) || (order.DateCreate >= model.DateFrom && order.DateCreate <= model.DateTo))
                 {
                     result.Add(CreateModel(order));
                 }
