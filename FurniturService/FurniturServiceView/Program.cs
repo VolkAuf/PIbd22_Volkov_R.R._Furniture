@@ -32,6 +32,7 @@ namespace FurniturServiceView
             currentContainer.RegisterType<OrderLogic>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<FurnitureLogic>(new HierarchicalLifetimeManager());
             currentContainer.RegisterType<WarehouseLogic>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<ReportLogic>(new HierarchicalLifetimeManager());
             return currentContainer;
         }
     }
