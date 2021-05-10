@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace FurnitureServiceBusinessLogic.BindingModels
@@ -9,8 +10,16 @@ namespace FurnitureServiceBusinessLogic.BindingModels
     /// </summary>
     public class CreateOrderBindingModel
     {
-        public int FurnituretId { get; set; }
+        [DataMember]
+        public int ClientId { get; set; }
+
+        [DataMember]
+        public int FurnitureId { get; set; }
+
+        [DataMember]
         public int Count { get; set; }
+
+        [DataMember]
         public decimal Sum { get; set; }
     }
 }

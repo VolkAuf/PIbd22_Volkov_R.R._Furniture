@@ -11,7 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FurnitureServiceListImpleme
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FurnitureServiceFileImplement", "FurnitureServiceFileImplement\FurnitureServiceFileImplement.csproj", "{17B67559-406D-4FFC-BA82-88AFB580E68C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FurnitureServiceDatabaseImplement", "FurnitureServiceDatabaseImplement\FurnitureServiceDatabaseImplement.csproj", "{BD0B49A5-DD97-42B1-B5A3-F04D4EF97FCB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FurnitureServiceDatabaseImplement", "FurnitureServiceDatabaseImplement\FurnitureServiceDatabaseImplement.csproj", "{BD0B49A5-DD97-42B1-B5A3-F04D4EF97FCB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FurnitureServiceRestApi", "FurnitureServiceRestApi\FurnitureServiceRestApi.csproj", "{5617175A-14B8-4349-8EDB-14D4F4BC575E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FurnitureServiceClientApp", "FurnitureServiceClientApp\FurnitureServiceClientApp.csproj", "{7C77A3CA-04BB-4434-97A4-1150CC4FFEC5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,6 +87,30 @@ Global
 		{BD0B49A5-DD97-42B1-B5A3-F04D4EF97FCB}.Release|x64.Build.0 = Release|Any CPU
 		{BD0B49A5-DD97-42B1-B5A3-F04D4EF97FCB}.Release|x86.ActiveCfg = Release|Any CPU
 		{BD0B49A5-DD97-42B1-B5A3-F04D4EF97FCB}.Release|x86.Build.0 = Release|Any CPU
+		{5617175A-14B8-4349-8EDB-14D4F4BC575E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5617175A-14B8-4349-8EDB-14D4F4BC575E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5617175A-14B8-4349-8EDB-14D4F4BC575E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5617175A-14B8-4349-8EDB-14D4F4BC575E}.Debug|x64.Build.0 = Debug|Any CPU
+		{5617175A-14B8-4349-8EDB-14D4F4BC575E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5617175A-14B8-4349-8EDB-14D4F4BC575E}.Debug|x86.Build.0 = Debug|Any CPU
+		{5617175A-14B8-4349-8EDB-14D4F4BC575E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5617175A-14B8-4349-8EDB-14D4F4BC575E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5617175A-14B8-4349-8EDB-14D4F4BC575E}.Release|x64.ActiveCfg = Release|Any CPU
+		{5617175A-14B8-4349-8EDB-14D4F4BC575E}.Release|x64.Build.0 = Release|Any CPU
+		{5617175A-14B8-4349-8EDB-14D4F4BC575E}.Release|x86.ActiveCfg = Release|Any CPU
+		{5617175A-14B8-4349-8EDB-14D4F4BC575E}.Release|x86.Build.0 = Release|Any CPU
+		{7C77A3CA-04BB-4434-97A4-1150CC4FFEC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C77A3CA-04BB-4434-97A4-1150CC4FFEC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C77A3CA-04BB-4434-97A4-1150CC4FFEC5}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7C77A3CA-04BB-4434-97A4-1150CC4FFEC5}.Debug|x64.Build.0 = Debug|Any CPU
+		{7C77A3CA-04BB-4434-97A4-1150CC4FFEC5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7C77A3CA-04BB-4434-97A4-1150CC4FFEC5}.Debug|x86.Build.0 = Debug|Any CPU
+		{7C77A3CA-04BB-4434-97A4-1150CC4FFEC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C77A3CA-04BB-4434-97A4-1150CC4FFEC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C77A3CA-04BB-4434-97A4-1150CC4FFEC5}.Release|x64.ActiveCfg = Release|Any CPU
+		{7C77A3CA-04BB-4434-97A4-1150CC4FFEC5}.Release|x64.Build.0 = Release|Any CPU
+		{7C77A3CA-04BB-4434-97A4-1150CC4FFEC5}.Release|x86.ActiveCfg = Release|Any CPU
+		{7C77A3CA-04BB-4434-97A4-1150CC4FFEC5}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
