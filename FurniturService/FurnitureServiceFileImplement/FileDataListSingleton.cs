@@ -78,6 +78,7 @@ namespace FurnitureServiceFileImplement
                     {
                         Id = Convert.ToInt32(elem.Attribute("Id").Value),
                         FurnitureId = Convert.ToInt32(elem.Element("FurnitureId").Value),
+                        ClientId = Convert.ToInt32(elem.Element("ClientId").Value),
                         Count = Convert.ToInt32(elem.Element("Count").Value),
                         Sum = Convert.ToDecimal(elem.Element("Sum").Value),
                         Status = (OrderStatus)Enum.Parse(typeof(OrderStatus),
@@ -194,6 +195,7 @@ namespace FurnitureServiceFileImplement
                     xElement.Add(new XElement("Order",
                     new XAttribute("Id", order.Id),
                     new XElement("FurnitureId", order.FurnitureId),
+                    new XElement("ClientId", order.ClientId),
                     new XElement("Count", order.Count),
                     new XElement("Sum", order.Sum),
                     new XElement("Status", order.Status),
