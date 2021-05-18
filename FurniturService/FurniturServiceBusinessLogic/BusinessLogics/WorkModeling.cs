@@ -1,8 +1,10 @@
 ﻿using FurnitureServiceBusinessLogic.BindingModels;
+using FurnitureServiceBusinessLogic.Enums;
 using FurnitureServiceBusinessLogic.Interfaces;
 using FurnitureServiceBusinessLogic.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -51,6 +53,34 @@ namespace FurnitureServiceBusinessLogic.BusinessLogics
                 // отдыхаем
                 Thread.Sleep(implementer.PauseTime);
             }
+            var requiredComponents = await Task.Run(() => _orderLogic.Read(null)
+                .Where(rec => rec.Status == OrderStatus.Требуются_материалы).ToList());
+            foreach (var order in requiredComponents)
+            {
+                try
+                {
+                    _orderLogic.TakeOrderInWork(new ChangeStatusBindingModel
+                    {
+                        OrderId = order.Id,
+                        ImplementerId = implementer.Id
+                    });
+
+                    var processedOrder = _orderStorage.GetElement(new OrderBindingModel
+                    {
+                        Id = order.Id
+                    });
+
+                    if (processedOrder.Status == OrderStatus.Требуются_материалы)
+                    {
+                        continue;
+                    }
+
+                    Thread.Sleep(implementer.WorkingTime * rnd.Next(1, 5) * order.Count);
+                    _orderLogic.FinishOrder(new ChangeStatusBindingModel { OrderId = order.Id });
+                    Thread.Sleep(implementer.PauseTime);
+                }
+                catch (Exception) { }
+            }
             await Task.Run(() =>
             {
                 foreach (var order in orders)
@@ -61,7 +91,7 @@ namespace FurnitureServiceBusinessLogic.BusinessLogics
                         _orderLogic.TakeOrderInWork(new ChangeStatusBindingModel { OrderId = order.Id, ImplementerId = implementer.Id });
                         // делаем работу
                         Thread.Sleep(implementer.WorkingTime * rnd.Next(1, 5) * order.Count);
-                        _orderLogic.FinishOrder(new ChangeStatusBindingModel { OrderId = order.Id });
+                        _orderLogic.FinishOrder(new ChangeStatusBindingModel { OrderId = order.Id, ImplementerId = implementer.Id });
                         // отдыхаем
                         Thread.Sleep(implementer.PauseTime);
                     }

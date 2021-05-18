@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FurnitureServiceDatabaseImplement.Migrations
 {
-    public partial class InitImplementer : Migration
+    public partial class InitCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -62,6 +62,21 @@ namespace FurnitureServiceDatabaseImplement.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Implementers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Warehouses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    WarehouseName = table.Column<string>(nullable: false),
+                    FullNameOfTheHead = table.Column<string>(nullable: false),
+                    DateCreate = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Warehouses", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -129,6 +144,33 @@ namespace FurnitureServiceDatabaseImplement.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "WarehouseComponents",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ComponentId = table.Column<int>(nullable: false),
+                    WarehouseId = table.Column<int>(nullable: false),
+                    Count = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WarehouseComponents", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_WarehouseComponents_Components_ComponentId",
+                        column: x => x.ComponentId,
+                        principalTable: "Components",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_WarehouseComponents_Warehouses_WarehouseId",
+                        column: x => x.WarehouseId,
+                        principalTable: "Warehouses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_FurnitureComponents_ComponentId",
                 table: "FurnitureComponents",
@@ -153,6 +195,16 @@ namespace FurnitureServiceDatabaseImplement.Migrations
                 name: "IX_Orders_ImplementerId",
                 table: "Orders",
                 column: "ImplementerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WarehouseComponents_ComponentId",
+                table: "WarehouseComponents",
+                column: "ComponentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WarehouseComponents_WarehouseId",
+                table: "WarehouseComponents",
+                column: "WarehouseId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -164,7 +216,7 @@ namespace FurnitureServiceDatabaseImplement.Migrations
                 name: "Orders");
 
             migrationBuilder.DropTable(
-                name: "Components");
+                name: "WarehouseComponents");
 
             migrationBuilder.DropTable(
                 name: "Clients");
@@ -174,6 +226,12 @@ namespace FurnitureServiceDatabaseImplement.Migrations
 
             migrationBuilder.DropTable(
                 name: "Implementers");
+
+            migrationBuilder.DropTable(
+                name: "Components");
+
+            migrationBuilder.DropTable(
+                name: "Warehouses");
         }
     }
 }
