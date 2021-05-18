@@ -15,13 +15,14 @@ namespace FurniturServiceView
         private readonly OrderLogic _orderLogic;
         private readonly ReportLogic _reportLogic;
         private readonly ClientLogic _clientLogic;
+        private readonly WorkModeling _workModeling;
 
-        public FormMain(OrderLogic orderLogic, ReportLogic reportLogic, ClientLogic clientLogic)
+        public FormMain(OrderLogic orderLogic, ReportLogic reportLogic, WorkModeling workModeling)
         {
             InitializeComponent();
             this._orderLogic = orderLogic;
             this._reportLogic = reportLogic;
-            this._clientLogic = clientLogic;
+            this._workModeling = workModeling;
         }
         private void FormMain_Load(object sender, EventArgs e)
         {
@@ -39,6 +40,7 @@ namespace FurniturServiceView
                     dataGridView.Columns[0].Visible = false;
                     dataGridView.Columns[1].Visible = false;
                     dataGridView.Columns[2].Visible = false;
+                    dataGridView.Columns[3].Visible = false;
                     dataGridView.Columns[8].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
                 }
@@ -181,6 +183,18 @@ namespace FurniturServiceView
         private void ClientsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = Container.Resolve<FormClients>();
+            form.ShowDialog();
+        }
+
+        private void запускРаботToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _workModeling.DoWork();
+            LoadData();
+        }
+
+        private void исполнителиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormImplementers>();
             form.ShowDialog();
         }
     }

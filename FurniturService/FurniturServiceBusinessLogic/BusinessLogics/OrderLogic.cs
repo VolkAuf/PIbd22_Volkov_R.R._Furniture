@@ -12,6 +12,7 @@ namespace FurnitureServiceBusinessLogic.BusinessLogics
         private readonly IOrderStorage _orderStorage;
         private readonly IFurnitureStorage _furnitureStorage;
         private readonly IWarehouseStorage _warehouseStorage;
+        private readonly object locker = new object();
         public OrderLogic(IOrderStorage orderStorage, IFurnitureStorage furnitureStorage, IWarehouseStorage warehouseStorage)
         {
             _orderStorage = orderStorage;
@@ -44,6 +45,35 @@ namespace FurnitureServiceBusinessLogic.BusinessLogics
         }
         public void TakeOrderInWork(ChangeStatusBindingModel model)
         {
+            lock (locker)
+            {
+                var order = _orderStorage.GetElement(new OrderBindingModel { Id = model.OrderId });
+                if (order == null)
+                {
+                    throw new Exception("Не найден заказ");
+                }
+                if (order.Status != OrderStatus.Принят)
+                {
+                    throw new Exception("Заказ не в статусе \"Принят\"");
+                }
+                if (order.ImplementerId.HasValue)
+                {
+                    throw new Exception("У заказа уже есть исполнитель");
+                }
+                _orderStorage.Update(new OrderBindingModel
+                {
+                    Id = order.Id,
+                    ClientId = order.ClientId,
+                    ImplementerId = model.ImplementerId,
+                    FurnitureId = order.FurnitureId,
+                    Count = order.Count,
+                    Sum = order.Sum,
+                    DateCreate = order.DateCreate,
+                    DateImplement = DateTime.Now,
+                    Status = OrderStatus.Выполняется
+                });
+            }
+        }
             var order = _orderStorage.GetElement(new OrderBindingModel { Id = model.OrderId });
             if (order == null)
             {
@@ -85,6 +115,7 @@ namespace FurnitureServiceBusinessLogic.BusinessLogics
                 Id = order.Id,
                 FurnitureId = order.FurnitureId,
                 ClientId = order.ClientId,
+                ImplementerId = order.ImplementerId,
                 Count = order.Count,
                 Sum = order.Sum,
                 DateCreate = order.DateCreate,
@@ -109,6 +140,7 @@ namespace FurnitureServiceBusinessLogic.BusinessLogics
                 Id = order.Id,
                 FurnitureId = order.FurnitureId,
                 ClientId = order.ClientId,
+                ImplementerId = order.ImplementerId,
                 Count = order.Count,
                 Sum = order.Sum,
                 DateCreate = order.DateCreate,
