@@ -1,4 +1,5 @@
 ﻿using FurnitureServiceBusinessLogic.BindingModels;
+using FurnitureServiceBusinessLogic.Enums;
 using FurnitureServiceBusinessLogic.Interfaces;
 using FurnitureServiceBusinessLogic.ViewModels;
 using FurnitureServiceListImplement.Models;
@@ -33,10 +34,11 @@ namespace FurnitureServiceListImplement.Implements
             List<OrderViewModel> result = new List<OrderViewModel>();
             foreach (var order in source.Orders)
             {
-                if ((!model.DateFrom.HasValue && !model.DateTo.HasValue && order.DateCreate.Date == model.DateCreate.Date) ||
-            (model.DateFrom.HasValue && model.DateTo.HasValue && order.DateCreate.Date >= model.DateFrom.Value.Date &&
-            order.DateCreate.Date <= model.DateTo.Value.Date) ||
-            (order.ClientId == model.ClientId))
+                if ((!model.DateFrom.HasValue && !model.DateTo.HasValue && order.DateCreate.Date == model.DateCreate.Date)
+                     || (model.DateFrom.HasValue && model.DateTo.HasValue && order.DateCreate.Date >= model.DateFrom.Value.Date && order.DateCreate.Date <= model.DateTo.Value.Date)
+                     || (model.ClientId.HasValue && order.ClientId == model.ClientId)
+                     || (model.FreeOrders.HasValue && model.FreeOrders.Value && !order.ImplementerId.HasValue)
+                     || (model.ImplementerId.HasValue && order.ImplementerId == model.ImplementerId && order.Status == OrderStatus.Выполняется))
                 {
                     result.Add(CreateModel(order));
                 }
@@ -107,6 +109,7 @@ namespace FurnitureServiceListImplement.Implements
             order.Status = model.Status;
             order.Sum = model.Sum;
             order.ClientId = (int) model.ClientId;
+            order.ImplementerId = model.ImplementerId;
             return order;
         }
         private OrderViewModel CreateModel(Order order)
@@ -127,18 +130,28 @@ namespace FurnitureServiceListImplement.Implements
                     clientFIO = or.ClientFIO;
                 }
             }
+            string implementerFIO = null;
+            foreach (var implementer in source.Implementers)
+            {
+                if (implementer.Id == order.ImplementerId)
+                {
+                    implementerFIO = implementer.ImplementerFIO;
+                }
+            }
             return new OrderViewModel
             {
                 Id = order.Id,
                 FurnitureId = order.FurnitureId,
+                FurnitureName = furnitureName,
                 ClientId = order.ClientId,
                 ClientFIO = clientFIO,
+                ImplementerId = order.ImplementerId,
+                ImplementerFIO = implementerFIO,
                 Count = order.Count,
                 DateCreate = order.DateCreate,
                 DateImplement = order.DateImplement,
                 Status = order.Status,
-                Sum = order.Sum,
-                FurnitureName = furnitureName
+                Sum = order.Sum
             };
         }
     }

@@ -12,12 +12,16 @@ namespace FurnitureServiceListImplement
         public List<Order> Orders { get; set; }
         public List<Furnitures> Furnitures { get; set; }
         public List<Client> Clients { get; set; }
+        public List<Implementer> Implementers { get; set; }
+        public List<MessageInfo> MessageInfos { get; set; }
         private DataListSingleton()
         {
             Components = new List<Component>();
             Orders = new List<Order>();
             Furnitures = new List<Furnitures>();
             Clients = new List<Client>();
+            Implementers = new List<Implementer>();
+            MessageInfos = new List<MessageInfo>();
         }
         public static DataListSingleton GetInstance()
         {

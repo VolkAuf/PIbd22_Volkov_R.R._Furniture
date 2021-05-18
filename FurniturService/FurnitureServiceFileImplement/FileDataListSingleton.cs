@@ -17,11 +17,13 @@ namespace FurnitureServiceFileImplement
         private readonly string FurnitureFileName = "Furniture.xml";
         private readonly string ClientFileName = "Client.xml";
         private readonly string ImplementerFileName = "Implementer.xml";
+        private readonly string MessageInfoFileName = "MessageInfoFileName.xml";
         public List<Component> Components { get; set; }
         public List<Order> Orders { get; set; }
         public List<Furniture> Furnitures { get; set; }
         public List<Client> Clients { get; set; }
         public List<Implementer> Implementers { get; set; }
+        public List<MessageInfo> MessageInfos { get; set; }
         private FileDataListSingleton()
         {
             Components = LoadComponents();
@@ -29,6 +31,7 @@ namespace FurnitureServiceFileImplement
             Furnitures = LoadFurnitures();
             Clients = LoadClients();
             Implementers = LoadImplementers();
+            MessageInfos = LoadMessageInfos();
         }
         public static FileDataListSingleton GetInstance()
         {
@@ -45,6 +48,7 @@ namespace FurnitureServiceFileImplement
             SaveFurnitures();
             SaveClients();
             SaveImplementers();
+            SaveMessageInfos();
         }
         private List<Component> LoadComponents()
         {
@@ -157,6 +161,28 @@ namespace FurnitureServiceFileImplement
             }
             return list;
         }
+        private List<MessageInfo> LoadMessageInfos()
+        {
+            var list = new List<MessageInfo>();
+            if (File.Exists(MessageInfoFileName))
+            {
+                XDocument xDocument = XDocument.Load(MessageInfoFileName);
+                var xElements = xDocument.Root.Elements("MessageInfo").ToList();
+                foreach (var elem in xElements)
+                {
+                    list.Add(new MessageInfo
+                    {
+                        MessageId = elem.Attribute("MessageId").Value,
+                        ClientId = Convert.ToInt32(elem.Element("ClientId").Value),
+                        SenderName = elem.Element("SenderName").Value,
+                        DateDelivery = Convert.ToDateTime(elem.Element("DateDelivery")?.Value),
+                        Subject = elem.Element("Subject").Value,
+                        Body = elem.Element("Body").Value,
+                    });
+                }
+            }
+            return list;
+        }
         private void SaveComponents()
         {
             if (Components != null)
@@ -217,7 +243,6 @@ namespace FurnitureServiceFileImplement
                 xDocument.Save(FurnitureFileName);
             }
         }
-
         private void SaveClients()
         {
             if (Clients != null)
@@ -250,6 +275,26 @@ namespace FurnitureServiceFileImplement
                 }
                 XDocument xDocument = new XDocument(xElement);
                 xDocument.Save(ImplementerFileName);
+            }
+        }
+        private void SaveMessageInfos()
+        {
+            if (MessageInfos != null)
+            {
+                var xElement = new XElement("MessageInfos");
+                foreach (var message in MessageInfos)
+                {
+                    xElement.Add(new XElement("MessageInfo",
+                    new XAttribute("MessageId", message.MessageId),
+                    new XElement("ClientId", message.ClientId),
+                    new XElement("SenderName", message.SenderName),
+                    new XElement("DateDelivery", message.DateDelivery),
+                    new XElement("Subject", message.Subject),
+                    new XElement("Body", message.Body)
+                    ));
+                }
+                XDocument xDocument = new XDocument(xElement);
+                xDocument.Save(MessageInfoFileName);
             }
         }
     }
