@@ -13,9 +13,8 @@ namespace FurnitureServiceBusinessLogic.BusinessLogics
         private readonly IOrderStorage _orderStorage;
         private readonly IFurnitureStorage _furnitureStorage;
         private readonly IWarehouseStorage _warehouseStorage;
-        private readonly object locker = new object();
-        private readonly IOrderStorage _orderStorage;
         private readonly IClientStorage _clientStorage;
+        private readonly object locker = new object();
         public OrderLogic(IOrderStorage orderStorage, IFurnitureStorage furnitureStorage, IWarehouseStorage warehouseStorage, IClientStorage clientStorage)
         {
             _orderStorage = orderStorage;
