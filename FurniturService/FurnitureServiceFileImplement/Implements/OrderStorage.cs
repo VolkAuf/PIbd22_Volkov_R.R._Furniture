@@ -29,11 +29,12 @@ namespace FurnitureServiceFileImplement.Implements
             {
                 return null;
             }
-            return source.Orders.Where(rec => (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate.Date == model.DateCreate.Date)
-                    || (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date)
-                    || (model.ClientId.HasValue && rec.ClientId == model.ClientId)
-                    || (model.FreeOrders.HasValue && model.FreeOrders.Value && !rec.ImplementerId.HasValue)
-                    || (model.ImplementerId.HasValue && rec.ImplementerId == model.ImplementerId && rec.Status == OrderStatus.Выполняется))
+            return source.Orders.
+                Where(rec => (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate.Date == model.DateCreate.Date)
+                || (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date)
+                || (model.ClientId.HasValue && rec.ClientId == model.ClientId)
+                || (model.FreeOrders.HasValue && model.FreeOrders.Value && !rec.ImplementerId.HasValue)
+                || (model.ImplementerId.HasValue && rec.ImplementerId == model.ImplementerId && rec.Status == OrderStatus.Выполняется))
             .Select(CreateModel).ToList();
         }
         public OrderViewModel GetElement(OrderBindingModel model)
@@ -78,6 +79,7 @@ namespace FurnitureServiceFileImplement.Implements
             order.ClientId = (int)model.ClientId;
             order.ImplementerId = model.ImplementerId;
             order.FurnitureId = model.FurnitureId;
+            order.ImplementerId = model.ImplementerId;
             order.Count = model.Count;
             order.DateCreate = model.DateCreate;
             order.DateImplement = model.DateImplement;

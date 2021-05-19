@@ -22,5 +22,6 @@ namespace FurnitureServiceDatabaseImplement
         public virtual DbSet<WarehouseComponent> WarehouseComponents { set; get; }
         public virtual DbSet<Client> Clients { get; set; }
         public virtual DbSet<Implementer> Implementers { get; set; }
+        public virtual DbSet<MessageInfo> MessageInfoes { get; set; }
     }
 }

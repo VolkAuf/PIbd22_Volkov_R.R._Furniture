@@ -12,6 +12,7 @@ namespace FurnitureServiceListImplement
         public List<Warehouse> Warehouses { get; set; }
         public List<Client> Clients { get; set; }
         public List<Implementer> Implementers { get; set; }
+        public List<MessageInfo> MessageInfos { get; set; }
         private DataListSingleton()
         {
             Components = new List<Component>();
@@ -19,6 +20,7 @@ namespace FurnitureServiceListImplement
             Furnitures = new List<Furnitures>();
             Clients = new List<Client>();
             Implementers = new List<Implementer>();
+            MessageInfos = new List<MessageInfo>();
             Warehouses = new List<Warehouse>();
         }
         public static DataListSingleton GetInstance()

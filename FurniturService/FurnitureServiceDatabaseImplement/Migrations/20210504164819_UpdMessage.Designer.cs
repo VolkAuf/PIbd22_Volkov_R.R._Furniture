@@ -4,14 +4,16 @@ using FurnitureServiceDatabaseImplement;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FurnitureServiceDatabaseImplement.Migrations
 {
     [DbContext(typeof(FurnitureServiceDatabase))]
-    partial class FurnitureServiceDatabaseModelSnapshot : ModelSnapshot
+    [Migration("20210504164819_UpdMessage")]
+    partial class UpdMessage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -194,54 +196,6 @@ namespace FurnitureServiceDatabaseImplement.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("FurnitureServiceDatabaseImplement.Models.Warehouse", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("DateCreate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FullNameOfTheHead")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("WarehouseName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Warehouses");
-                });
-
-            modelBuilder.Entity("FurnitureServiceDatabaseImplement.Models.WarehouseComponent", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ComponentId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Count")
-                        .HasColumnType("int");
-
-                    b.Property<int>("WarehouseId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ComponentId");
-
-                    b.HasIndex("WarehouseId");
-
-                    b.ToTable("WarehouseComponents");
-                });
-
             modelBuilder.Entity("FurnitureServiceDatabaseImplement.Models.FurnitureComponent", b =>
                 {
                     b.HasOne("FurnitureServiceDatabaseImplement.Models.Component", "Component")
@@ -281,21 +235,6 @@ namespace FurnitureServiceDatabaseImplement.Migrations
                     b.HasOne("FurnitureServiceDatabaseImplement.Models.Implementer", "Implementer")
                         .WithMany("Orders")
                         .HasForeignKey("ImplementerId");
-                });
-
-            modelBuilder.Entity("FurnitureServiceDatabaseImplement.Models.WarehouseComponent", b =>
-                {
-                    b.HasOne("FurnitureServiceDatabaseImplement.Models.Component", "Component")
-                        .WithMany("WarehouseComponents")
-                        .HasForeignKey("ComponentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FurnitureServiceDatabaseImplement.Models.Warehouse", "Warehouse")
-                        .WithMany("WarehouseComponents")
-                        .HasForeignKey("WarehouseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
