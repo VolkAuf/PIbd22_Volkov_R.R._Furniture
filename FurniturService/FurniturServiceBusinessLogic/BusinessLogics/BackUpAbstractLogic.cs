@@ -4,7 +4,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Reflection;
 using System.Runtime.Serialization.Json;
-using System.Text;
+using System.Xml.Serialization;
 
 namespace FurnitureServiceBusinessLogic.BusinessLogics
 {
@@ -57,10 +57,10 @@ namespace FurnitureServiceBusinessLogic.BusinessLogics
         {
             var records = GetList<T>();
             T obj = new T();
-            DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(typeof(List<T>));
-            using (FileStream fs = new FileStream(string.Format("{0}/{1}.json", folderName, obj.GetType().Name), FileMode.OpenOrCreate))
+            XmlSerializer xmlFormatter = new XmlSerializer(typeof(List<T>));
+            using (FileStream fs = new FileStream(string.Format("{0}/{1}.xml", folderName, obj.GetType().Name), FileMode.OpenOrCreate))
             {
-                jsonFormatter.WriteObject(fs, records);
+                xmlFormatter.Serialize(fs, records);
             }
         }
         protected abstract Assembly GetAssembly();
