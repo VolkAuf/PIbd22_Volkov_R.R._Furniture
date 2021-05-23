@@ -6,16 +6,20 @@ using System.Text;
 
 namespace FurnitureServiceDatabaseImplement.Models
 {
-    public class Client
+    public class Implementer
     {
         public int Id { get; set; }
+
         [Required]
-        public string ClientFIO { get; set; }
+        public string ImplementerFIO { get; set; }
+
         [Required]
-        public string Email { get; set; }
+        public int WorkingTime { get; set; }
+
         [Required]
-        public string Password { get; set; }
-        [ForeignKey("ClientId")]
-        public virtual List<Order> Orders { get; set; }
+        public int PauseTime { get; set; }
+
+        [ForeignKey("ImplementerId")]
+        public List<Order> Orders { get; set; }
     }
 }

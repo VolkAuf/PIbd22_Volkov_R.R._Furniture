@@ -9,6 +9,7 @@ namespace FurnitureServiceDatabaseImplement.Models
         public int Id { get; set; }
         public int FurnitureId { get; set; }
         public int ClientId { get; set; }
+        public int? ImplementerId { get; set; }
         [Required]
         public int Count { get; set; }
         [Required]
@@ -20,5 +21,6 @@ namespace FurnitureServiceDatabaseImplement.Models
         public DateTime? DateImplement { get; set; }
         public virtual Furniture Furnitures { get; set; }
         public virtual Client Clients { get; set; }
+        public virtual Implementer Implementer { get; set; }
     }
 }
