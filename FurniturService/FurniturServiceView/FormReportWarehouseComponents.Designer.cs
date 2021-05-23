@@ -30,10 +30,10 @@ namespace FurniturServiceView
         private void InitializeComponent()
         {
             this.dataGridView = new System.Windows.Forms.DataGridView();
-            this.buttonSaveToExcel = new System.Windows.Forms.Button();
             this.ColumnWarehouse = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnComponent = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.buttonSaveToExcel = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -50,16 +50,6 @@ namespace FurniturServiceView
             this.dataGridView.RowTemplate.Height = 24;
             this.dataGridView.Size = new System.Drawing.Size(572, 469);
             this.dataGridView.TabIndex = 3;
-            // 
-            // buttonSaveToExcel
-            // 
-            this.buttonSaveToExcel.Location = new System.Drawing.Point(268, 43);
-            this.buttonSaveToExcel.Name = "buttonSaveToExcel";
-            this.buttonSaveToExcel.Size = new System.Drawing.Size(176, 23);
-            this.buttonSaveToExcel.TabIndex = 2;
-            this.buttonSaveToExcel.Text = "Сохранить в Excel";
-            this.buttonSaveToExcel.UseVisualStyleBackColor = true;
-            this.buttonSaveToExcel.Click += new System.EventHandler(this.buttonSaveToExcel_Click);
             // 
             // ColumnWarehouse
             // 
@@ -82,6 +72,16 @@ namespace FurniturServiceView
             this.ColumnCount.Name = "ColumnCount";
             this.ColumnCount.Width = 125;
             // 
+            // buttonSaveToExcel
+            // 
+            this.buttonSaveToExcel.Location = new System.Drawing.Point(268, 43);
+            this.buttonSaveToExcel.Name = "buttonSaveToExcel";
+            this.buttonSaveToExcel.Size = new System.Drawing.Size(176, 23);
+            this.buttonSaveToExcel.TabIndex = 2;
+            this.buttonSaveToExcel.Text = "Сохранить в Excel";
+            this.buttonSaveToExcel.UseVisualStyleBackColor = true;
+            this.buttonSaveToExcel.Click += new System.EventHandler(this.buttonSaveToExcel_Click);
+            // 
             // FormReportWarehouseComponents
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -90,7 +90,7 @@ namespace FurniturServiceView
             this.Controls.Add(this.dataGridView);
             this.Controls.Add(this.buttonSaveToExcel);
             this.Name = "FormReportWarehouseComponents";
-            this.Text = "FormReportWarehouseComponents";
+            this.Text = "Список компонентов по складам";
             this.Load += new System.EventHandler(this.FormReportWarehouseComponents_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.ResumeLayout(false);

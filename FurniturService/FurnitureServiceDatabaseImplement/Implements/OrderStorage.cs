@@ -45,7 +45,7 @@ namespace FurnitureServiceDatabaseImplement.Implements
                 return context.Orders
                 .Include(rec => rec.Furnitures)
                 .Include(rec => rec.Clients)
-                .Where(rec => (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate.Date == model.DateCreate.Date) ||
+                .Where(rec => (rec.FurnitureId == model.FurnitureId) || (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate.Date == model.DateCreate.Date) ||
                 (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date) ||
                 (rec.ClientId == model.ClientId))
                 .Select(rec => new OrderViewModel
