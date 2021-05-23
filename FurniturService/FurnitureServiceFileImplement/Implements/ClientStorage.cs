@@ -9,7 +9,7 @@ using System.Text;
 
 namespace FurnitureServiceFileImplement.Implements
 {
-    class ClientStorage : IClientStorage
+    public class ClientStorage : IClientStorage
     {
         private readonly FileDataListSingleton source;
 

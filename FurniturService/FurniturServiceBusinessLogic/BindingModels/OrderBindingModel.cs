@@ -14,13 +14,13 @@ namespace FurnitureServiceBusinessLogic.BindingModels
         public int? Id { get; set; }
 
         [DataMember]
-        public int ClientId { get; set; }
-
-        [DataMember]
-        public string ClientFIO { get; set; }
+        public int? ClientId { get; set; }
 
         [DataMember]
         public int FurnitureId { get; set; }
+
+        [DataMember]
+        public int? ImplementerId { get; set; }
 
         [DataMember]
         public int Count { get; set; }
@@ -42,5 +42,8 @@ namespace FurnitureServiceBusinessLogic.BindingModels
 
         [DataMember]
         public DateTime? DateTo { get; set; }
+
+        [DataMember]
+        public bool? FreeOrders { get; set; }
     }
 }
