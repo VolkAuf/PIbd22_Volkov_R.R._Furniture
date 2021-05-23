@@ -121,7 +121,7 @@ namespace FurniturServiceView
             this.Controls.Add(this.textBoxFIO);
             this.Controls.Add(this.labelFIO);
             this.Name = "FormImplementer";
-            this.Text = "FormImplementer";
+            this.Text = "Исполнитель";
             this.Load += new System.EventHandler(this.FormImplementer_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

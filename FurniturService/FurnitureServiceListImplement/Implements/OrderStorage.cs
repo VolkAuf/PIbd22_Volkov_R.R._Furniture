@@ -104,6 +104,7 @@ namespace FurnitureServiceListImplement.Implements
         {
             order.FurnitureId = model.FurnitureId;
             order.Count = model.Count;
+            order.ImplementerId = model.ImplementerId;
             order.DateCreate = model.DateCreate;
             order.DateImplement = model.DateImplement;
             order.Status = model.Status;
