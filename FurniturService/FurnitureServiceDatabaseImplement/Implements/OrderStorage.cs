@@ -17,16 +17,19 @@ namespace FurnitureServiceDatabaseImplement.Implements
             {
                 return context.Orders
                 .Include(rec => rec.Furnitures)
+                .Include(rec => rec.Clients)
                 .Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
                     FurnitureId = rec.FurnitureId,
+                    ClientId = rec.ClientId,
                     FurnitureName = rec.Furnitures.FurnitureName,
                     Count = rec.Count,
                     Sum = rec.Sum,
                     Status = rec.Status,
                     DateCreate = rec.DateCreate,
                     DateImplement = rec.DateImplement,
+                    ClientFIO = rec.Clients.ClientFIO
                 })
                 .ToList();
             }
@@ -41,18 +44,23 @@ namespace FurnitureServiceDatabaseImplement.Implements
             {
                 return context.Orders
                 .Include(rec => rec.Furnitures)
-                .Where(rec => (rec.FurnitureId == model.FurnitureId) || (rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo))
+                .Include(rec => rec.Clients)
+                .Where(rec => (rec.FurnitureId == model.FurnitureId) || (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.DateCreate.Date == model.DateCreate.Date) ||
+                (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate.Date >= model.DateFrom.Value.Date && rec.DateCreate.Date <= model.DateTo.Value.Date) ||
+                (rec.ClientId == model.ClientId))
                 .Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
                     FurnitureId = rec.FurnitureId,
+                    ClientId = rec.ClientId,
                     FurnitureName = rec.Furnitures.FurnitureName,
                     Count = rec.Count,
                     Sum = rec.Sum,
                     Status = rec.Status,
                     DateCreate = rec.DateCreate,
                     DateImplement = rec.DateImplement,
-                })
+                    ClientFIO = rec.Clients.ClientFIO,
+                }) 
                 .ToList();
             }
         }
@@ -65,6 +73,7 @@ namespace FurnitureServiceDatabaseImplement.Implements
             using (FurnitureServiceDatabase context = new FurnitureServiceDatabase())
             {
                 Order order = context.Orders
+                .Include(rec => rec.Clients)
                 .Include(rec => rec.Furnitures)
                 .FirstOrDefault(rec => rec.Id == model.Id);
                 return order != null ?
@@ -72,12 +81,14 @@ namespace FurnitureServiceDatabaseImplement.Implements
                 {
                     Id = order.Id,
                     FurnitureId = order.FurnitureId,
+                    ClientId = order.ClientId,
                     FurnitureName = order.Furnitures.FurnitureName,
                     Count = order.Count,
                     Sum = order.Sum,
                     Status = order.Status,
                     DateCreate = order.DateCreate,
                     DateImplement = order.DateImplement,
+                    ClientFIO = order.Clients.ClientFIO
                 } :
                 null;
             }
@@ -89,6 +100,7 @@ namespace FurnitureServiceDatabaseImplement.Implements
                 Order order = new Order
                 {
                     FurnitureId = model.FurnitureId,
+                    ClientId = (int) model.ClientId,
                     Count = model.Count,
                     Sum = model.Sum,
                     Status = model.Status,
@@ -111,6 +123,7 @@ namespace FurnitureServiceDatabaseImplement.Implements
                     throw new Exception("Элемент не найден");
                 }
                 element.FurnitureId = model.FurnitureId;
+                element.ClientId = (int) model.ClientId;
                 element.Count = model.Count;
                 element.Sum = model.Sum;
                 element.Status = model.Status;

@@ -34,7 +34,8 @@ namespace FurnitureServiceBusinessLogic.BusinessLogics
         {
             _orderStorage.Insert(new OrderBindingModel
             {
-                FurnitureId = model.FurnituretId,
+                FurnitureId = model.FurnitureId,
+                ClientId = model.ClientId,
                 Count = model.Count,
                 Sum = model.Sum,
                 DateCreate = DateTime.Now,
@@ -60,6 +61,7 @@ namespace FurnitureServiceBusinessLogic.BusinessLogics
             {
                 Id = order.Id,
                 FurnitureId = order.FurnitureId,
+                ClientId = order.ClientId,
                 Count = order.Count,
                 Sum = order.Sum,
                 DateCreate = order.DateCreate,
@@ -82,6 +84,7 @@ namespace FurnitureServiceBusinessLogic.BusinessLogics
             {
                 Id = order.Id,
                 FurnitureId = order.FurnitureId,
+                ClientId = order.ClientId,
                 Count = order.Count,
                 Sum = order.Sum,
                 DateCreate = order.DateCreate,
@@ -99,12 +102,13 @@ namespace FurnitureServiceBusinessLogic.BusinessLogics
             }
             if (order.Status != OrderStatus.Готов)
             {
-                throw new Exception("Заказ не в статусе \"Выполняется\"");
+                throw new Exception("Заказ не в статусе \"Готов\"");
             }
             _orderStorage.Update(new OrderBindingModel
             {
                 Id = order.Id,
                 FurnitureId = order.FurnitureId,
+                ClientId = order.ClientId,
                 Count = order.Count,
                 Sum = order.Sum,
                 DateCreate = order.DateCreate,

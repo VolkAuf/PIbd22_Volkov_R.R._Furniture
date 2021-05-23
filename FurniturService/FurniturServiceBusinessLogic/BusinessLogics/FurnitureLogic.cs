@@ -31,7 +31,7 @@ namespace FurnitureServiceBusinessLogic.BusinessLogics
             var element = _furnitureStorage.GetElement(new FurnitureBindingModel { FurnitureName = model.FurnitureName });
             if (element != null && element.Id != model.Id)
             {
-                throw new Exception("Уже есть компонент с таким названием");
+                throw new Exception("Уже есть изделие с таким названием");
             }
             if (model.Id.HasValue)
             {

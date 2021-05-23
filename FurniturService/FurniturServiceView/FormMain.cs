@@ -14,12 +14,14 @@ namespace FurniturServiceView
         public new IUnityContainer Container { get; set; }
         private readonly OrderLogic _orderLogic;
         private readonly ReportLogic _reportLogic;
+        private readonly ClientLogic _clientLogic;
 
-        public FormMain(OrderLogic orderLogic, ReportLogic reportLogic)
+        public FormMain(OrderLogic orderLogic, ReportLogic reportLogic, ClientLogic clientLogic)
         {
             InitializeComponent();
             this._orderLogic = orderLogic;
             this._reportLogic = reportLogic;
+            this._clientLogic = clientLogic;
         }
         private void FormMain_Load(object sender, EventArgs e)
         {
@@ -36,6 +38,9 @@ namespace FurniturServiceView
                     dataGridView.DataSource = list;
                     dataGridView.Columns[0].Visible = false;
                     dataGridView.Columns[1].Visible = false;
+                    dataGridView.Columns[2].Visible = false;
+                    dataGridView.Columns[8].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
                 }
             }
             catch (Exception ex)
@@ -170,6 +175,12 @@ namespace FurniturServiceView
         private void заказыЗаВесьПериодToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = Container.Resolve<FormReportOrdersDate>();
+            form.ShowDialog();
+        }
+
+        private void ClientsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormClients>();
             form.ShowDialog();
         }
     }
