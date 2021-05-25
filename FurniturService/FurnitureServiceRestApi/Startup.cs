@@ -34,9 +34,9 @@ namespace FurnitureServiceRestApi
             services.AddTransient<IOrderStorage, OrderStorage>();
             services.AddTransient<IFurnitureStorage, FurnitureStorage>();
             services.AddTransient<IMessageInfoStorage, MessageInfoStorage>();
-            services.AddTransient<MailLogic>();
             services.AddTransient<IWarehouseStorage, WarehouseStorage>();
             services.AddTransient<IComponentStorage, ComponentStorage>();
+            services.AddTransient<MailLogic>();
             services.AddTransient<OrderLogic>();
             services.AddTransient<ClientLogic>();
             services.AddTransient<FurnitureLogic>();

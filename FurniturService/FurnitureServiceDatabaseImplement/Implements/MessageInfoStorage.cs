@@ -35,9 +35,23 @@ namespace FurnitureServiceDatabaseImplement.Implements
             }
             using (var context = new FurnitureServiceDatabase())
             {
+                if (model.ToSkip.HasValue && model.ToTake.HasValue && !model.ClientId.HasValue)
+                {
+                    return context.MessageInfoes.Skip((int)model.ToSkip).Take((int)model.ToTake)
+                    .Select(rec => new MessageInfoViewModel
+                    {
+                        MessageId = rec.MessageId,
+                        SenderName = rec.SenderName,
+                        DateDelivery = rec.DateDelivery,
+                        Subject = rec.Subject,
+                        Body = rec.Body
+                    }).ToList();
+                }
                 return context.MessageInfoes
                 .Where(rec => (model.ClientId.HasValue && rec.ClientId == model.ClientId) ||
                 (!model.ClientId.HasValue && rec.DateDelivery.Date == model.DateDelivery.Date))
+                .Skip(model.ToSkip ?? 0)
+                .Take(model.ToTake ?? context.MessageInfoes.Count())
                 .Select(rec => new MessageInfoViewModel
                 {
                     MessageId = rec.MessageId,
