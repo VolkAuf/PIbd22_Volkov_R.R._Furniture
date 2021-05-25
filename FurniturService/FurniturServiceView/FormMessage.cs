@@ -45,22 +45,7 @@ namespace FurniturServiceView
                 {
                     buttonNext.Enabled = true;
                 }
-                else
-                {
-                    buttonNext.Enabled = false;
-                }
-
-                if (list != null)
-                {
-                    dataGridView.DataSource = list;
-                    dataGridView.Columns[0].Visible = false;
-                    dataGridView.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                }
-
-                if (currentPage != 0)
-                {
-                    buttonPrev.Enabled = true;
-                }
+                Program.ConfigGrid(logic.Read(new MessageInfoBindingModel { ToSkip = currentPage * mailsOnPage, ToTake = mailsOnPage + 1 }), dataGridView);
             }
             catch (Exception ex)
             {
