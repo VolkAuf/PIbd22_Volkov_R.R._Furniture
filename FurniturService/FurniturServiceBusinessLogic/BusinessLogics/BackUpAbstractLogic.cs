@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Reflection;
-using System.Runtime.Serialization.Json;
 using System.Xml.Serialization;
 
 namespace FurnitureServiceBusinessLogic.BusinessLogics
 {
     public abstract class BackUpAbstractLogic
     {
+        public object Assemply { get; private set; }
         public void CreateArchive(string folderName)
         {
             try

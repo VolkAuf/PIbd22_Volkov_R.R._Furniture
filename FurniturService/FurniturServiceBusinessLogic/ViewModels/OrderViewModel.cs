@@ -45,7 +45,7 @@ namespace FurnitureServiceBusinessLogic.ViewModels
         [DisplayName("Количество")]
         public int Count { get; set; }
 
-        [Column(title: "Сумма", width: 50)]
+        [Column(title: "Сумма", format: "c2", width: 50)]
         [DataMember]
         [DisplayName("Сумма")]
         public decimal Sum { get; set; }
@@ -55,12 +55,12 @@ namespace FurnitureServiceBusinessLogic.ViewModels
         [DisplayName("Статус")]
         public OrderStatus Status { get; set; }
 
-        [Column(title: "Дата создания", width: 100)]
+        [Column(title: "Дата создания", format: "dd/MM/yyyy", width: 100)]
         [DataMember]
         [DisplayName("Дата создания")]
         public DateTime DateCreate { get; set; }
 
-        [Column(title: "Дата выполнения", width: 100)]
+        [Column(title: "Дата выполнения", format: "dd/MM/yyyy", width: 100)]
         [DataMember]
         [DisplayName("Дата выполнения")]
         public DateTime? DateImplement { get; set; }

@@ -79,7 +79,7 @@ namespace FurniturServiceView
             this.Controls.Add(this.buttonMake);
             this.Controls.Add(this.reportViewerOrders);
             this.Name = "FormReportOrdersDate";
-            this.Text = "FormReportOrdersDate";
+            this.Text = "Все заказы";
             this.Load += new System.EventHandler(this.FormReportOrdersDate_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ReportOrdersDateViewModelBindingSource)).EndInit();
             this.ResumeLayout(false);

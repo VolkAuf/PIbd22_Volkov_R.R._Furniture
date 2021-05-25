@@ -1,11 +1,13 @@
 ﻿using FurnitureServiceBusinessLogic.BindingModels;
 using FurnitureServiceBusinessLogic.BusinessLogics;
+using FurnitureServiceBusinessLogic.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -38,6 +40,8 @@ namespace FurniturServiceView
             try
             {
                 var list = logic.Read(new MessageInfoBindingModel { ToSkip = currentPage * mailsOnPage, ToTake = mailsOnPage + 1 });
+                var method = typeof(Program).GetMethod("ConfigGrid");
+                MethodInfo generic = method.MakeGenericMethod(typeof(MessageInfoViewModel));
 
                 hasNext = !(list.Count <= mailsOnPage);
 
@@ -45,7 +49,12 @@ namespace FurniturServiceView
                 {
                     buttonNext.Enabled = true;
                 }
-                Program.ConfigGrid(logic.Read(new MessageInfoBindingModel { ToSkip = currentPage * mailsOnPage, ToTake = mailsOnPage + 1 }), dataGridView);
+                else
+                {
+                    buttonNext.Enabled = false;
+                }
+
+                generic.Invoke(this, new object[] { list.Take(mailsOnPage).ToList(), dataGridView });
             }
             catch (Exception ex)
             {

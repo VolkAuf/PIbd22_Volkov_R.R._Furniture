@@ -17,7 +17,7 @@ namespace FurnitureServiceBusinessLogic.ViewModels
         [DisplayName("Название мебели")]
         public string FurnitureName { get; set; }
 
-        [Column(title: "Цена", width: 100)]
+        [Column(title: "Цена", format: "c2", width: 100)]
         [DataMember]
         [DisplayName("Цена")]
         public decimal Price { get; set; }

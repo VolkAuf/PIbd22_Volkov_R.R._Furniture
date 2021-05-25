@@ -5,6 +5,7 @@ using FurnitureServiceBusinessLogic.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace FurnitureServiceBusinessLogic.BusinessLogics
 {
@@ -138,20 +139,22 @@ namespace FurnitureServiceBusinessLogic.BusinessLogics
         /// <param name="model"></param>
         public void SaveFurnitureComponentToExcelFile(ReportBindingModel model)
         {
+            MethodInfo method = GetType().GetMethod("GetFurnitureComponent");
             SaveToExcel.CreateDoc(new ExcelInfo
             {
                 FileName = model.FileName,
                 Title = "Список изделий с компонентами",
-                FurnitureComponents = GetFurnitureComponent()
+                FurnitureComponents = (List<ReportFurnitureComponentViewModel>)method.Invoke(this, null)
             });
         }
         public void SaveWarehouseComponentsToExcelFile(ReportBindingModel model)
         {
+            MethodInfo method = GetType().GetMethod("GetWarehouseComponents");
             SaveToExcel.CreateWarehouseDoc(new ExcelInfoWarehouse
             {
                 FileName = model.FileName,
                 Title = "Список складов",
-                WarehouseComponents = GetWarehouseComponents()
+                WarehouseComponents = (List<ReportWarehouseComponentsViewModel>)method.Invoke(this, null)
             });
         }
         /// <summary>
@@ -160,22 +163,24 @@ namespace FurnitureServiceBusinessLogic.BusinessLogics
         /// <param name="model"></param>
         public void SaveOrdersToPdfFile(ReportBindingModel model)
         {
+            MethodInfo method = GetType().GetMethod("GetOrders");
             SaveToPdf.CreateDoc(new PdfInfo
             {
                 FileName = model.FileName,
                 Title = "Список заказов",
                 DateFrom = model.DateFrom.Value,
                 DateTo = model.DateTo.Value,
-                Orders = GetOrders(model)
+                Orders = (List<ReportOrdersViewModel>)method.Invoke(this, new object[] { model })
             });
         }
         public void SaveOrdersDateToPdfFile(ReportBindingModel model)
         {
+            MethodInfo method = GetType().GetMethod("GetOrdersDate");
             SaveToPdf.CreateSummaryOrderInfoDoc(new PdfInfoOrdersDate
             {
                 FileName = model.FileName,
                 Title = "Список заказов",
-                Orders = GetOrdersDate()
+                Orders = (List<ReportOrdersDateViewModel>)method.Invoke(this, null)
             });
         }
     }
