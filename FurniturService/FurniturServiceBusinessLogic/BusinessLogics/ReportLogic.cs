@@ -29,7 +29,6 @@ namespace FurnitureServiceBusinessLogic.BusinessLogics
         public List<ReportFurnitureComponentViewModel> GetFurnitureComponent()
         {
             List<FurnitureViewModel> furnitures = _furnitureStorage.GetFullList();
-            List<ComponentViewModel> components = _componentStorage.GetFullList();
             List<ReportFurnitureComponentViewModel> list = new List<ReportFurnitureComponentViewModel>();
             foreach (FurnitureViewModel furniture in furnitures)
             {
@@ -39,13 +38,10 @@ namespace FurnitureServiceBusinessLogic.BusinessLogics
                     Components = new List<Tuple<string, int>>(),
                     TotalCount = 0
                 };
-                foreach (ComponentViewModel component in components)
+                foreach (var component in furniture.FurnitureComponents)
                 {
-                    if (furniture.FurnitureComponents.ContainsKey(component.Id))
-                    {
-                        record.Components.Add(new Tuple<string, int>(component.ComponentName, furniture.FurnitureComponents[component.Id].Item2));
-                        record.TotalCount += furniture.FurnitureComponents[component.Id].Item2;
-                    }
+                        record.Components.Add(new Tuple<string, int>(component.Value.Item1, component.Value.Item2));
+                        record.TotalCount += component.Value.Item2;
                 }
                 list.Add(record);
             }
@@ -71,7 +67,6 @@ namespace FurnitureServiceBusinessLogic.BusinessLogics
         }
         public List<ReportWarehouseComponentsViewModel> GetWarehouseComponents()
         {
-            var components = _componentStorage.GetFullList();
             var warehouses = _warehouseStorage.GetFullList();
             var records = new List<ReportWarehouseComponentsViewModel>();
 
@@ -84,15 +79,11 @@ namespace FurnitureServiceBusinessLogic.BusinessLogics
                     Components = new List<Tuple<string, int>>(),
                 };
 
-                foreach (var component in components)
+                foreach (var component in warehouse.WarehouseComponents)
                 {
-                    if (warehouse.WarehouseComponents.ContainsKey(component.Id))
-                    {
-                        record.Components.Add(new Tuple<string, int>(
-                            component.ComponentName, warehouse.WarehouseComponents[component.Id].Item2));
-
-                        record.TotalCount += warehouse.WarehouseComponents[component.Id].Item2;
-                    }
+                    record.Components.Add(new Tuple<string, int>(
+                        component.Value.Item1, component.Value.Item2));
+                    record.TotalCount += component.Value.Item2;
                 }
                 records.Add(record);
             }

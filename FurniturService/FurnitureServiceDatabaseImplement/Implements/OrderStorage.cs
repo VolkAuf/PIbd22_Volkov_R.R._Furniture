@@ -58,7 +58,8 @@ namespace FurnitureServiceDatabaseImplement.Implements
                 (model.ClientId.HasValue && rec.ClientId == model.ClientId) ||
                 (model.FreeOrders.HasValue && model.FreeOrders.Value && 
                 rec.Status == OrderStatus.Принят) || (model.ImplementerId.HasValue &&
-                rec.ImplementerId == model.ImplementerId && rec.Status == OrderStatus.Выполняется))
+                rec.ImplementerId == model.ImplementerId && rec.Status == OrderStatus.Выполняется) ||
+                (model.ImplementerId.HasValue && rec.ImplementerId == model.ImplementerId && rec.Status == OrderStatus.Требуются_материалы))
                 .Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,

@@ -90,7 +90,7 @@ namespace FurniturServiceView
             this.Controls.Add(this.dataGridView);
             this.Controls.Add(this.buttonSaveToExcel);
             this.Name = "FormReportWarehouseComponents";
-            this.Text = "Компоненты на складах";
+            this.Text = "Список компонентов по складам";
             this.Load += new System.EventHandler(this.FormReportWarehouseComponents_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.ResumeLayout(false);
