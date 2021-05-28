@@ -1,5 +1,6 @@
 ﻿using FurnitureServiceBusinessLogic.BindingModels;
 using FurnitureServiceBusinessLogic.Enums;
+    using FurnitureServiceBusinessLogic.HelperModels.Message;
 using FurnitureServiceBusinessLogic.Interfaces;
 using FurnitureServiceBusinessLogic.ViewModels;
 using System;
@@ -12,10 +13,12 @@ namespace FurnitureServiceBusinessLogic.BusinessLogics
         private readonly IOrderStorage _orderStorage;
         private readonly IFurnitureStorage _furnitureStorage;
         private readonly IWarehouseStorage _warehouseStorage;
+        private readonly IClientStorage _clientStorage;
         private readonly object locker = new object();
-        public OrderLogic(IOrderStorage orderStorage, IFurnitureStorage furnitureStorage, IWarehouseStorage warehouseStorage)
+        public OrderLogic(IOrderStorage orderStorage, IFurnitureStorage furnitureStorage, IWarehouseStorage warehouseStorage, IClientStorage clientStorage)
         {
             _orderStorage = orderStorage;
+            _clientStorage = clientStorage;
             _furnitureStorage = furnitureStorage;
             _warehouseStorage = warehouseStorage;
         }
@@ -35,12 +38,18 @@ namespace FurnitureServiceBusinessLogic.BusinessLogics
         {
             _orderStorage.Insert(new OrderBindingModel
             {
-                FurnitureId = model.FurnitureId,
                 ClientId = model.ClientId,
+                FurnitureId = model.FurnitureId,
                 Count = model.Count,
                 Sum = model.Sum,
                 DateCreate = DateTime.Now,
                 Status = OrderStatus.Принят
+            });
+            MailLogic.MailSendAsync(new MailSendInfo
+            {
+                MailAddress = _clientStorage.GetElement(new ClientBindingModel { Id = model.ClientId })?.Email,
+                Subject = $"Новый заказ",
+                Text = $"Заказ от {DateTime.Now} на сумму {model.Sum:N2} принят."
             });
         }
         public void TakeOrderInWork(ChangeStatusBindingModel model)
@@ -83,6 +92,16 @@ namespace FurnitureServiceBusinessLogic.BusinessLogics
                 }
 
                 _orderStorage.Update(updateBindingModel);
+
+                MailLogic.MailSendAsync(new MailSendInfo
+                {
+                    MailAddress = _clientStorage.GetElement(new ClientBindingModel
+                    {
+                        Id = order.ClientId
+                    })?.Email,
+                    Subject = $"Заказ №{order.Id}",
+                    Text = $"Заказ №{order.Id} передан в работу."
+                });
             }
         }
         public void FinishOrder(ChangeStatusBindingModel model)
@@ -99,20 +118,29 @@ namespace FurnitureServiceBusinessLogic.BusinessLogics
             _orderStorage.Update(new OrderBindingModel
             {
                 Id = order.Id,
-                FurnitureId = order.FurnitureId,
                 ClientId = order.ClientId,
                 ImplementerId = order.ImplementerId,
+                FurnitureId = order.FurnitureId,
                 Count = order.Count,
                 Sum = order.Sum,
                 DateCreate = order.DateCreate,
                 DateImplement = order.DateImplement,
                 Status = OrderStatus.Готов
             });
+            // Отправить письмо
+            MailLogic.MailSendAsync(new MailSendInfo
+            {
+                MailAddress = _clientStorage.GetElement(new ClientBindingModel { Id = order.ClientId })?.Email,
+                Subject = $"Заказ №{order.Id}",
+                Text = $"Заказ №{order.Id} готов."
+            });
         }
         public void PayOrder(ChangeStatusBindingModel model)
         {
-            // продумать логику
-            var order = _orderStorage.GetElement(new OrderBindingModel { Id = model.OrderId });
+            var order = _orderStorage.GetElement(new OrderBindingModel
+            {
+                Id = model.OrderId
+            });
             if (order == null)
             {
                 throw new Exception("Не найден заказ");
@@ -124,14 +152,21 @@ namespace FurnitureServiceBusinessLogic.BusinessLogics
             _orderStorage.Update(new OrderBindingModel
             {
                 Id = order.Id,
-                FurnitureId = order.FurnitureId,
                 ClientId = order.ClientId,
                 ImplementerId = order.ImplementerId,
+                FurnitureId = order.FurnitureId,
                 Count = order.Count,
                 Sum = order.Sum,
                 DateCreate = order.DateCreate,
                 DateImplement = order.DateImplement,
                 Status = OrderStatus.Оплачен
+            });
+            // Отправить письмо
+            MailLogic.MailSendAsync(new MailSendInfo
+            {
+                MailAddress = _clientStorage.GetElement(new ClientBindingModel { Id = order.ClientId })?.Email,
+                Subject = $"Заказ №{order.Id}",
+                Text = $"Заказ №{order.Id} оплачен."
             });
         }
     }
