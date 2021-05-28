@@ -98,11 +98,11 @@ namespace FurnitureServiceBusinessLogic.BusinessLogics
             }
             return records;
         }
-        public List<ReportOrdersDateViewModel> GetOrdersDate()
+        public List<ReportOrdersAllDatesViewModel> GetOrdersAllDates()
         {
             return _orderStorage.GetFullList()
                 .GroupBy(order => order.DateCreate.ToShortDateString())
-                .Select(rec => new ReportOrdersDateViewModel
+                .Select(rec => new ReportOrdersAllDatesViewModel
                 {
                     Date = Convert.ToDateTime(rec.Key),
                     Count = rec.Count(),
@@ -173,14 +173,14 @@ namespace FurnitureServiceBusinessLogic.BusinessLogics
                 Orders = (List<ReportOrdersViewModel>)method.Invoke(this, new object[] { model })
             });
         }
-        public void SaveOrdersDateToPdfFile(ReportBindingModel model)
+        public void SaveOrdersAllDatesToPdfFile(ReportBindingModel model)
         {
-            MethodInfo method = GetType().GetMethod("GetOrdersDate");
+            MethodInfo method = GetType().GetMethod("GetOrdersAllDates");
             SaveToPdf.CreateSummaryOrderInfoDoc(new PdfInfoOrdersDate
             {
                 FileName = model.FileName,
                 Title = "Список заказов",
-                Orders = (List<ReportOrdersDateViewModel>)method.Invoke(this, null)
+                Orders = (List<ReportOrdersAllDatesViewModel>)method.Invoke(this, null)
             });
         }
     }

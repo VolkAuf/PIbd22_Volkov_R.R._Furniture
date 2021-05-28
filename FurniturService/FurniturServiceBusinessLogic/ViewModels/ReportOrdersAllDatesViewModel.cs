@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FurnitureServiceBusinessLogic.ViewModels
 {
-    public class ReportOrdersDateViewModel
+    public class ReportOrdersAllDatesViewModel
     {
         public DateTime Date { get; set; }
 

@@ -11,6 +11,6 @@ namespace FurnitureServiceBusinessLogic.HelperModels
 
         public string Title { get; set; }
 
-        public List<ReportOrdersDateViewModel> Orders { get; set; }
+        public List<ReportOrdersAllDatesViewModel> Orders { get; set; }
     }
 }

@@ -33,8 +33,8 @@ namespace FurniturServiceView
         {
             try
             {
-                MethodInfo method = logic.GetType().GetMethod("GetOrdersDate");
-                List<ReportOrdersDateViewModel> dataSource = (List<ReportOrdersDateViewModel>)method.Invoke(logic, null);
+                MethodInfo method = logic.GetType().GetMethod("GetOrdersAllDates");
+                List<ReportOrdersAllDatesViewModel> dataSource = (List<ReportOrdersAllDatesViewModel>)method.Invoke(logic, null);
 
                 ReportDataSource source = new ReportDataSource("DataSetOrdersDate", dataSource);
                 reportViewerOrders.LocalReport.DataSources.Add(source);
@@ -56,7 +56,7 @@ namespace FurniturServiceView
                 {
                     try
                     {
-                        MethodInfo method = logic.GetType().GetMethod("SaveOrdersDateToPdfFile");
+                        MethodInfo method = logic.GetType().GetMethod("SaveOrdersAllDatesToPdfFile");
 
                         method.Invoke(logic, new object[]
                         {

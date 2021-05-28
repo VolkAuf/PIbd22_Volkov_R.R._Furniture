@@ -103,7 +103,7 @@
             // 
             // ReportOrdersDateViewModelBindingSource
             // 
-            this.ReportOrdersDateViewModelBindingSource.DataSource = typeof(FurnitureServiceBusinessLogic.ViewModels.ReportOrdersDateViewModel);
+            this.ReportOrdersDateViewModelBindingSource.DataSource = typeof(FurnitureServiceBusinessLogic.ViewModels.ReportOrdersAllDatesViewModel);
             // 
             // FormReportOrders
             // 
