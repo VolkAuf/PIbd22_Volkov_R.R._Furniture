@@ -11,10 +11,10 @@ namespace FurnitureServiceBusinessLogic.ViewModels
     /// </summary>
     public class ImplementerViewModel
     {
-        [Column(title: "Номер", width: 100)]
+        [Column(title: "Номер", width: 50)]
         public int Id { get; set; }
 
-        [Column(title: "Исполнитель", width: 100)]
+        [Column(title: "Исполнитель", gridViewAutoSize: GridViewAutoSize.Fill)]
         [DisplayName("ФИО исполнителя")]
         public string ImplementerFIO { get; set; }
 

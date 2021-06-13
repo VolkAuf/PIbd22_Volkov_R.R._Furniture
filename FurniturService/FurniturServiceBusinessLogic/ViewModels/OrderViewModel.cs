@@ -12,7 +12,7 @@ namespace FurnitureServiceBusinessLogic.ViewModels
     [DataContract]
     public class OrderViewModel
     {
-        [Column(title: "Номер", width: 100)]
+        [Column(title: "Номер", width: 50)]
         [DataMember]
         public int Id { get; set; }
         
@@ -25,22 +25,22 @@ namespace FurnitureServiceBusinessLogic.ViewModels
         [DataMember]
         public int? ImplementerId { get; set; }
 
-        [Column(title: "Исполнитель", width: 150)]
+        [Column(title: "Исполнитель", gridViewAutoSize: GridViewAutoSize.Fill)]
         [DataMember]
         [DisplayName("Исполнитель")]
         public string ImplementerFIO { get; set; }
 
-        [Column(title: "Клиент", width: 150)]
+        [Column(title: "Клиент", width:150)]
         [DataMember]
         [DisplayName("Клиент")]
         public string ClientFIO { get; set; }
 
-        [Column(title: "Мебель", gridViewAutoSize: GridViewAutoSize.Fill)]
+        [Column(title: "Мебель", width: 100)]
         [DataMember]
         [DisplayName("Мебель")]
         public string FurnitureName { get; set; }
 
-        [Column(title: "Количество", width: 100)]
+        [Column(title: "Количество", width: 50)]
         [DataMember]
         [DisplayName("Количество")]
         public int Count { get; set; }
@@ -55,12 +55,12 @@ namespace FurnitureServiceBusinessLogic.ViewModels
         [DisplayName("Статус")]
         public OrderStatus Status { get; set; }
 
-        [Column(title: "Дата создания", format: "dd/MM/yyyy", width: 100)]
+        [Column(title: "Дата создания", format: "dd/MM/yyyy", width: 50)]
         [DataMember]
         [DisplayName("Дата создания")]
         public DateTime DateCreate { get; set; }
 
-        [Column(title: "Дата выполнения", format: "dd/MM/yyyy", width: 100)]
+        [Column(title: "Дата выполнения", format: "dd/MM/yyyy", width: 50)]
         [DataMember]
         [DisplayName("Дата выполнения")]
         public DateTime? DateImplement { get; set; }

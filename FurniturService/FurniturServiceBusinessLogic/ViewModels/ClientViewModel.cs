@@ -10,7 +10,7 @@ namespace FurnitureServiceBusinessLogic.ViewModels
     [DataContract]
     public class ClientViewModel
     {
-        [Column(title: "Номер", width: 100)]
+        [Column(title: "Номер", width: 50)]
         [DataMember]
         public int Id { get; set; }
 
@@ -19,12 +19,12 @@ namespace FurnitureServiceBusinessLogic.ViewModels
         [DisplayName("ФИО")]
         public string ClientFIO { get; set; }
 
-        [Column(title: "Почта", width: 100)]
+        [Column(title: "Почта", gridViewAutoSize: GridViewAutoSize.Fill)]
         [DataMember]
         [DisplayName("Почта")]
         public string Email { get; set; }
 
-        [Column(title: "Пароль", width: 100)]
+        [Column(title: "Пароль", gridViewAutoSize: GridViewAutoSize.Fill)]
         [DataMember]
         [DisplayName("Пароль")]
         public string Password { get; set; }

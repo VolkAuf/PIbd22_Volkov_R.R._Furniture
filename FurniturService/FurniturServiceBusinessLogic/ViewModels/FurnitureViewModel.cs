@@ -8,7 +8,7 @@ namespace FurnitureServiceBusinessLogic.ViewModels
     [DataContract]
     public class FurnitureViewModel
     {
-        [Column(title: "Номер", width: 100)]
+        [Column(title: "Номер", width: 50)]
         [DataMember]
         public int Id { get; set; }
 

@@ -10,10 +10,12 @@ namespace FurnitureServiceBusinessLogic.ViewModels
     [DataContract]
     public class WarehouseViewModel
     {
+        [Column(title: "Номер", width:50)]
         [DataMember]
+        [DisplayName("Номер")]
         public int Id { get; set; }
 
-        [Column(title: "название склада", gridViewAutoSize: GridViewAutoSize.Fill)]
+        [Column(title: "Название склада", gridViewAutoSize: GridViewAutoSize.Fill)]
         [DataMember]
         [DisplayName("Название склада")]
         public string WarehouseName { get; set; }
