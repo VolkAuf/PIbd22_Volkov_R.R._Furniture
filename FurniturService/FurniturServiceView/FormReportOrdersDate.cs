@@ -1,5 +1,6 @@
 ﻿using FurnitureServiceBusinessLogic.BindingModels;
 using FurnitureServiceBusinessLogic.BusinessLogics;
+using FurnitureServiceBusinessLogic.ViewModels;
 using Microsoft.Reporting.WinForms;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -31,7 +33,8 @@ namespace FurniturServiceView
         {
             try
             {
-                var dataSource = logic.GetOrdersDate();
+                MethodInfo method = logic.GetType().GetMethod("GetOrdersAllDates");
+                List<ReportOrdersAllDatesViewModel> dataSource = (List<ReportOrdersAllDatesViewModel>)method.Invoke(logic, null);
 
                 ReportDataSource source = new ReportDataSource("DataSetOrdersDate", dataSource);
                 reportViewerOrders.LocalReport.DataSources.Add(source);
@@ -53,10 +56,16 @@ namespace FurniturServiceView
                 {
                     try
                     {
-                        logic.SaveOrdersDateToPdfFile(new ReportBindingModel
+                        MethodInfo method = logic.GetType().GetMethod("SaveOrdersAllDatesToPdfFile");
+
+                        method.Invoke(logic, new object[]
                         {
-                            FileName = dialog.FileName
+                            new ReportBindingModel
+                            {
+                                FileName = dialog.FileName
+                            }
                         });
+
 
                         MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }

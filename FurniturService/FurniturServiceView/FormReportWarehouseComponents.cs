@@ -1,11 +1,13 @@
 ﻿using FurnitureServiceBusinessLogic.BindingModels;
 using FurnitureServiceBusinessLogic.BusinessLogics;
+using FurnitureServiceBusinessLogic.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -33,9 +35,14 @@ namespace FurniturServiceView
                 {
                     try
                     {
-                        logic.SaveWarehouseComponentsToExcelFile(new ReportBindingModel
+                        MethodInfo method = logic.GetType().GetMethod("SaveWarehouseComponentsToExcelFile");
+
+                        method.Invoke(logic, new object[]
                         {
-                            FileName = dialog.FileName
+                            new ReportBindingModel
+                            {
+                                FileName = dialog.FileName
+                            }
                         });
                         MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
@@ -51,7 +58,9 @@ namespace FurniturServiceView
         {
             try
             {
-                var warehouseComponents = logic.GetWarehouseComponents();
+                MethodInfo method = logic.GetType().GetMethod("GetWarehouseComponents");
+                List<ReportWarehouseComponentsViewModel> warehouseComponents = (List<ReportWarehouseComponentsViewModel>)method.Invoke(logic, null);
+
                 if (warehouseComponents != null)
                 {
                     dataGridView.Rows.Clear();

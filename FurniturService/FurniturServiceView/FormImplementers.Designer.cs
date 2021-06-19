@@ -44,12 +44,12 @@ namespace FurniturServiceView
             this.dataGridViewImplementers.Name = "dataGridViewImplementers";
             this.dataGridViewImplementers.RowHeadersWidth = 51;
             this.dataGridViewImplementers.RowTemplate.Height = 24;
-            this.dataGridViewImplementers.Size = new System.Drawing.Size(455, 378);
+            this.dataGridViewImplementers.Size = new System.Drawing.Size(552, 378);
             this.dataGridViewImplementers.TabIndex = 0;
             // 
             // buttonRef
             // 
-            this.buttonRef.Location = new System.Drawing.Point(517, 166);
+            this.buttonRef.Location = new System.Drawing.Point(571, 165);
             this.buttonRef.Name = "buttonRef";
             this.buttonRef.Size = new System.Drawing.Size(84, 23);
             this.buttonRef.TabIndex = 8;
@@ -59,7 +59,7 @@ namespace FurniturServiceView
             // 
             // buttonDel
             // 
-            this.buttonDel.Location = new System.Drawing.Point(517, 111);
+            this.buttonDel.Location = new System.Drawing.Point(571, 110);
             this.buttonDel.Name = "buttonDel";
             this.buttonDel.Size = new System.Drawing.Size(84, 23);
             this.buttonDel.TabIndex = 7;
@@ -69,7 +69,7 @@ namespace FurniturServiceView
             // 
             // buttonUpd
             // 
-            this.buttonUpd.Location = new System.Drawing.Point(517, 61);
+            this.buttonUpd.Location = new System.Drawing.Point(571, 60);
             this.buttonUpd.Name = "buttonUpd";
             this.buttonUpd.Size = new System.Drawing.Size(84, 23);
             this.buttonUpd.TabIndex = 6;
@@ -79,7 +79,7 @@ namespace FurniturServiceView
             // 
             // buttonAdd
             // 
-            this.buttonAdd.Location = new System.Drawing.Point(517, 13);
+            this.buttonAdd.Location = new System.Drawing.Point(571, 12);
             this.buttonAdd.Name = "buttonAdd";
             this.buttonAdd.Size = new System.Drawing.Size(84, 23);
             this.buttonAdd.TabIndex = 5;
@@ -91,7 +91,7 @@ namespace FurniturServiceView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(617, 403);
+            this.ClientSize = new System.Drawing.Size(665, 403);
             this.Controls.Add(this.buttonRef);
             this.Controls.Add(this.buttonDel);
             this.Controls.Add(this.buttonUpd);

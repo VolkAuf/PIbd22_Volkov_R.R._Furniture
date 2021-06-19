@@ -42,12 +42,12 @@ namespace FurniturServiceView
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.RowHeadersWidth = 51;
             this.dataGridView.RowTemplate.Height = 24;
-            this.dataGridView.Size = new System.Drawing.Size(542, 433);
+            this.dataGridView.Size = new System.Drawing.Size(801, 433);
             this.dataGridView.TabIndex = 0;
             // 
             // buttonDel
             // 
-            this.buttonDel.Location = new System.Drawing.Point(587, 13);
+            this.buttonDel.Location = new System.Drawing.Point(820, 13);
             this.buttonDel.Name = "buttonDel";
             this.buttonDel.Size = new System.Drawing.Size(82, 23);
             this.buttonDel.TabIndex = 1;
@@ -57,7 +57,7 @@ namespace FurniturServiceView
             // 
             // buttonRef
             // 
-            this.buttonRef.Location = new System.Drawing.Point(587, 43);
+            this.buttonRef.Location = new System.Drawing.Point(820, 43);
             this.buttonRef.Name = "buttonRef";
             this.buttonRef.Size = new System.Drawing.Size(82, 23);
             this.buttonRef.TabIndex = 2;
@@ -69,7 +69,7 @@ namespace FurniturServiceView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(700, 450);
+            this.ClientSize = new System.Drawing.Size(914, 450);
             this.Controls.Add(this.buttonRef);
             this.Controls.Add(this.buttonDel);
             this.Controls.Add(this.dataGridView);

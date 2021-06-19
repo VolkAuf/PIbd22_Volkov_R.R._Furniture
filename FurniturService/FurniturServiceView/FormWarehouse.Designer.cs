@@ -127,9 +127,9 @@
             this.labelFullName.AutoSize = true;
             this.labelFullName.Location = new System.Drawing.Point(24, 16);
             this.labelFullName.Name = "labelFullName";
-            this.labelFullName.Size = new System.Drawing.Size(152, 17);
+            this.labelFullName.Size = new System.Drawing.Size(149, 17);
             this.labelFullName.TabIndex = 8;
-            this.labelFullName.Text = "ФИО Ответственного";
+            this.labelFullName.Text = "ФИО ответственного";
             // 
             // labelName
             // 

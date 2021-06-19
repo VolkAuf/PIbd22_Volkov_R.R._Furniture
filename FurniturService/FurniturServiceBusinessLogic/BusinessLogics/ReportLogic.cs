@@ -5,6 +5,7 @@ using FurnitureServiceBusinessLogic.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace FurnitureServiceBusinessLogic.BusinessLogics
 {
@@ -88,11 +89,11 @@ namespace FurnitureServiceBusinessLogic.BusinessLogics
             }
             return records;
         }
-        public List<ReportOrdersDateViewModel> GetOrdersDate()
+        public List<ReportOrdersAllDatesViewModel> GetOrdersAllDates()
         {
             return _orderStorage.GetFullList()
                 .GroupBy(order => order.DateCreate.ToShortDateString())
-                .Select(rec => new ReportOrdersDateViewModel
+                .Select(rec => new ReportOrdersAllDatesViewModel
                 {
                     Date = Convert.ToDateTime(rec.Key),
                     Count = rec.Count(),
@@ -129,20 +130,22 @@ namespace FurnitureServiceBusinessLogic.BusinessLogics
         /// <param name="model"></param>
         public void SaveFurnitureComponentToExcelFile(ReportBindingModel model)
         {
+            MethodInfo method = GetType().GetMethod("GetFurnitureComponent");
             SaveToExcel.CreateDoc(new ExcelInfo
             {
                 FileName = model.FileName,
                 Title = "Список изделий с компонентами",
-                FurnitureComponents = GetFurnitureComponent()
+                FurnitureComponents = (List<ReportFurnitureComponentViewModel>)method.Invoke(this, null)
             });
         }
         public void SaveWarehouseComponentsToExcelFile(ReportBindingModel model)
         {
+            MethodInfo method = GetType().GetMethod("GetWarehouseComponents");
             SaveToExcel.CreateWarehouseDoc(new ExcelInfoWarehouse
             {
                 FileName = model.FileName,
                 Title = "Список складов",
-                WarehouseComponents = GetWarehouseComponents()
+                WarehouseComponents = (List<ReportWarehouseComponentsViewModel>)method.Invoke(this, null)
             });
         }
         /// <summary>
@@ -151,22 +154,24 @@ namespace FurnitureServiceBusinessLogic.BusinessLogics
         /// <param name="model"></param>
         public void SaveOrdersToPdfFile(ReportBindingModel model)
         {
+            MethodInfo method = GetType().GetMethod("GetOrders");
             SaveToPdf.CreateDoc(new PdfInfo
             {
                 FileName = model.FileName,
                 Title = "Список заказов",
                 DateFrom = model.DateFrom.Value,
                 DateTo = model.DateTo.Value,
-                Orders = GetOrders(model)
+                Orders = (List<ReportOrdersViewModel>)method.Invoke(this, new object[] { model })
             });
         }
-        public void SaveOrdersDateToPdfFile(ReportBindingModel model)
+        public void SaveOrdersAllDatesToPdfFile(ReportBindingModel model)
         {
+            MethodInfo method = GetType().GetMethod("GetOrdersAllDates");
             SaveToPdf.CreateSummaryOrderInfoDoc(new PdfInfoOrdersDate
             {
                 FileName = model.FileName,
                 Title = "Список заказов",
-                Orders = GetOrdersDate()
+                Orders = (List<ReportOrdersAllDatesViewModel>)method.Invoke(this, null)
             });
         }
     }

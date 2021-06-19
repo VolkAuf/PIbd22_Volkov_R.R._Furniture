@@ -3,6 +3,7 @@ using FurnitureServiceBusinessLogic.BusinessLogics;
 using FurnitureServiceBusinessLogic.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Windows.Forms;
 using Unity;
 
@@ -16,13 +17,15 @@ namespace FurniturServiceView
         private readonly ReportLogic _reportLogic;
         private readonly ClientLogic _clientLogic;
         private readonly WorkModeling _workModeling;
+        private readonly BackUpAbstractLogic _backUpAbstractLogic;
 
-        public FormMain(OrderLogic orderLogic, ReportLogic reportLogic, WorkModeling workModeling)
+        public FormMain(OrderLogic orderLogic, ReportLogic reportLogic, WorkModeling workModeling, BackUpAbstractLogic backUpAbstractLogic)
         {
             InitializeComponent();
             this._orderLogic = orderLogic;
             this._reportLogic = reportLogic;
             this._workModeling = workModeling;
+            this._backUpAbstractLogic = backUpAbstractLogic;
         }
         private void FormMain_Load(object sender, EventArgs e)
         {
@@ -33,17 +36,7 @@ namespace FurniturServiceView
             try
             {
                 // продумать логику
-                List<OrderViewModel> list = _orderLogic.Read(null);
-                if (list != null)
-                {
-                    dataGridView.DataSource = list;
-                    dataGridView.Columns[0].Visible = false;
-                    dataGridView.Columns[1].Visible = false;
-                    dataGridView.Columns[2].Visible = false;
-                    dataGridView.Columns[3].Visible = false;
-                    dataGridView.Columns[8].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-
-                }
+                Program.ConfigGrid(_orderLogic.Read(null), dataGridView);
             }
             catch (Exception ex)
             {
@@ -124,8 +117,15 @@ namespace FurniturServiceView
             {
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    _reportLogic.SaveComponentsToWordFile(new ReportBindingModel { FileName = dialog.FileName });
-                    MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MethodInfo method = _reportLogic.GetType().GetMethod("SaveComponentsToWordFile");
+                    method.Invoke(_reportLogic, new object[]{
+                        new ReportBindingModel
+                        { 
+                            FileName = dialog.FileName
+                        }
+                    });
+
+                   MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
@@ -164,11 +164,13 @@ namespace FurniturServiceView
             {
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    _reportLogic.SaveWarehousesToWordFile(new ReportBindingModel
-                    {
-                        FileName = dialog.FileName
+                    MethodInfo method = _reportLogic.GetType().GetMethod("SaveWarehousesToWordFile");
+                    method.Invoke(_reportLogic, new object[]{
+                        new ReportBindingModel
+                        {
+                            FileName = dialog.FileName
+                        }
                     });
-
                     MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
@@ -202,6 +204,26 @@ namespace FurniturServiceView
         {
             var form = Container.Resolve<FormMessage>();
             form.ShowDialog();
+        }
+
+        private void создатьБекапToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (_backUpAbstractLogic != null)
+                {
+                    var fbd = new FolderBrowserDialog();
+                    if (fbd.ShowDialog() == DialogResult.OK)
+                    {
+                        _backUpAbstractLogic.CreateArchive(fbd.SelectedPath);
+                        MessageBox.Show("Бекап создан", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

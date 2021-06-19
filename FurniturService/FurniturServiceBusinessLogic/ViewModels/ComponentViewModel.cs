@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using FurnitureServiceBusinessLogic.Attributes;
+using System.ComponentModel;
 
 namespace FurnitureServiceBusinessLogic.ViewModels
 {
@@ -7,7 +8,10 @@ namespace FurnitureServiceBusinessLogic.ViewModels
     /// </summary>
     public class ComponentViewModel
     {
+        [Column(title: "Номер", width: 50)]
         public int Id { get; set; }
+
+        [Column(title: "Компонент", gridViewAutoSize: GridViewAutoSize.Fill)]
         [DisplayName("Название компонента")]
         public string ComponentName { get; set; }
     }
